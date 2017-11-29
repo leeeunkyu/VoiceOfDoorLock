@@ -1,0 +1,29 @@
+ form ol {
+        padding-left: 0;
+        width: 20%;
+      }
+
+      form li {
+        background: #eee;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        list-style-type: none;
+      }
+
+      form img {
+        height: 300px;
+        margin-left; 20px;
+        order: 1;
+      }
+
+      form p {
+        line-height: 32px;
+        padding-left: 10px;
+      }
+
+      form label:hover, form button:hover {
+        background-color: black;
+        color: white;
+      }
+
