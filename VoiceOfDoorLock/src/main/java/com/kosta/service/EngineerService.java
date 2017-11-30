@@ -24,8 +24,8 @@ public class EngineerService {
 	}
 
 
-	public void insertEngineer(String engineerPhone, String engineerName, String branchNaem, String engineerTrip) {
-		engineerDao.insertEngineer(engineerPhone,engineerName,branchNaem,engineerTrip);
+	public void insertEngineer(String engineerPhone, String engineerName, String branchNaem, String isTrip) {
+		engineerDao.insertEngineer(engineerPhone,engineerName,branchNaem,isTrip);
 	}
 
 }

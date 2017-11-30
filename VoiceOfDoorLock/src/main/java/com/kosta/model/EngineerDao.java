@@ -43,7 +43,7 @@ public class EngineerDao {
 				pstmt.setString(1, branchName);
 				pstmt.setString(2, "%"+searchContent+"%");
 			}else {
-				sql = "ELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ENGINEER_TRIP LIKE ?";
+				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ISTRIP LIKE ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, branchName);
 				pstmt.setString(2, "%"+searchContent+"%");
@@ -67,12 +67,12 @@ public class EngineerDao {
 		return list;
 	}
 
-	public boolean insertEngineer(String engineerPhone, String engineerName, String branchName, String engineerTrip) {
+	public boolean insertEngineer(String engineerPhone, String engineerName, String branchName, String isTrip) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "insert into engineer values (?,?,?,?)";
+		String sql = "INSERT INTO ENGINEER VALUES (?,?,?,?)";
 		
 		try {
 			con = factoryDao.getConnection();
@@ -80,10 +80,8 @@ public class EngineerDao {
 			pstmt.setString(1, engineerPhone);
 			pstmt.setString(2, engineerName);
 			pstmt.setString(3, branchName);
-			pstmt.setString(4, engineerTrip);
-
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			pstmt.setString(4, isTrip);
+			if(pstmt.executeUpdate() != 0) {
 				return true;
 			}
 			

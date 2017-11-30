@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,12 +25,25 @@ public class AsApplicationController {
 		this.asApplicationService = asApplicationService;
 	}
 	
+	public boolean sessionCheck(HttpSession session) {
+		if(session.getAttribute("adminId") != null) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(value="asApplicationListView.do")
-	public ModelAndView memberListView() {
+	public ModelAndView memberListView(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		ArrayList<AsApplication> asApplicationArr = asApplicationService.asApplicationSelectList(null,null);
-		mv.addObject("asApplicationListSize", ""+asApplicationArr.size());
-		mv.setViewName("asApplication/asApplicationlist");
+		if(sessionCheck(session)) {
+			ArrayList<AsApplication> asApplicationArr = asApplicationService.asApplicationSelectList(null,null);
+			mv.addObject("asApplicationListSize", ""+asApplicationArr.size());
+			mv.setViewName("asApplication/asApplicationlist");
+		}else {
+			mv.addObject("errorType", "notAdmin");
+			mv.setViewName("error/errormain");
+		}
+			
 		return mv;
 	}
 	@RequestMapping(value="asApplicationSelectSize.do")

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.runners.Parameterized.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +52,32 @@ public class EngineerController {
 		this.engineerService = engineerService;
 	}
 	
+	public boolean sessionCheck(HttpSession session) {
+		if(session.getAttribute("adminId") != null) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(value="engineerListView.do")
-	public ModelAndView engineerListView(String branchName,String memberId) {
+	public ModelAndView engineerListView(HttpSession session,String branchName,String memberId) {
+		
 		ModelAndView mv = new ModelAndView();
-		ArrayList<Engineer> engineerArr = engineerService.engineerSelectList(null,null,branchName);
-		Member member = memberService.memberSelect(memberId);
-		mv.addObject("engineerListSize", ""+engineerArr.size());
-		mv.addObject("engineerList", engineerArr);
-		mv.addObject("member",member);
-		mv.setViewName("engineer/engineerlist");
+		if(sessionCheck(session)) {
+			ArrayList<Engineer> engineerArr = engineerService.engineerSelectList(null,null,branchName);
+			if(engineerArr.size() <=0) {
+				mv.setViewName("error/notengineer");
+			}else {
+				Member member = memberService.memberSelect(memberId);
+				mv.addObject("engineerListSize", ""+engineerArr.size());
+				mv.addObject("engineerList", engineerArr);
+				mv.addObject("member",member);
+				mv.setViewName("engineer/engineerlist");
+			}
+		}else {
+			mv.addObject("errorType", "notAdmin");
+			mv.setViewName("error/errormain");
+		}
 		return mv;
 	}
 	

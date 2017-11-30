@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kosta.dto.AsApplication;
 import com.kosta.service.DoorLockService;
 import com.kosta.service.EngineerService;
 import com.kosta.util.CreateDoorLockNum;
@@ -40,17 +42,36 @@ public class BranchController {
 	public void setEngineerService(EngineerService engineerService) {
 		this.engineerService = engineerService;
 	}
+	
+	public boolean sessionCheck(HttpSession session) {
+		if(session.getAttribute("adminId") != null) {
+			return true;
+		}
+		return false;
+	}
 
 	@RequestMapping(value="branchMainView.do")
-	public ModelAndView branchMainView() {
+	public ModelAndView branchMainView(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("branch/branchmain");
+		if(sessionCheck(session)) {
+			mv.setViewName("branch/branchmain");
+		}else {
+			mv.addObject("errorType", "notAdmin");
+			mv.setViewName("error/errormain");
+		}
 		return mv;
 	}
 	
 	@RequestMapping(value="insertDoorKeyView.do")
-	public String insertDoorKeyView() {
-		return "branch/doorlockCreate";
+	public ModelAndView insertDoorKeyView(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(sessionCheck(session)) {
+			mv.setViewName("branch/doorlockCreate");
+		}else {
+			mv.addObject("errorType", "notAdmin");
+			mv.setViewName("error/errormain");
+		}
+		return mv;
 	}
 	
 	@RequestMapping(value="insertDoorKey.do")
@@ -78,9 +99,15 @@ public class BranchController {
 	}
 	
 	@RequestMapping(value="insertEngineerView.do")
-	public ModelAndView insertEngineerView() {
+	public ModelAndView insertEngineerView(HttpSession session) {
+		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("branch/insertengineer");
+		if(sessionCheck(session)) {
+			mv.setViewName("branch/insertengineer");
+		}else {
+			mv.addObject("errorType", "notAdmin");
+			mv.setViewName("error/errormain");
+		}
 		return mv;
 	}
 	@RequestMapping(value="insertBranchView.do")
@@ -103,7 +130,7 @@ public class BranchController {
 	
 	@RequestMapping(value="insertEngineer.do", method=RequestMethod.POST )
 	public ModelAndView insertEngineer(MultipartHttpServletRequest request,
-        MultipartFile uploadFile, Object obj,String engineerPhone,String engineerName,String engineerTrip,String branchName) {
+        MultipartFile uploadFile, Object obj,String engineerPhone,String engineerName,String isTrip,String branchName) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("branch/branchmain");
 		String path = "";
@@ -152,7 +179,7 @@ public class BranchController {
                 e.printStackTrace();
             }
         }
-        engineerService.insertEngineer(engineerPhone,engineerName,branchName,engineerTrip);
+        engineerService.insertEngineer(engineerPhone,engineerName,branchName,isTrip);
         return mv;
   	}
 private String getSaveLocation(MultipartHttpServletRequest request, Object obj) {

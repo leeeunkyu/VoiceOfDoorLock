@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,12 +27,26 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 
+	public boolean sessionCheck(HttpSession session) {
+		if(session.getAttribute("adminId") != null) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(value="memberListView.do")
-	public ModelAndView memberListView() {
+	public ModelAndView memberListView(HttpSession session) {
+		
 		ModelAndView mv = new ModelAndView();
-		ArrayList<Member> memberArr = memberService.memberSelectList(null,null);
-		mv.addObject("memberListSize", ""+memberArr.size());
-		mv.setViewName("member/memberlist");
+		if(sessionCheck(session)) {
+			
+			ArrayList<Member> memberArr = memberService.memberSelectList(null,null);
+			mv.addObject("memberListSize", ""+memberArr.size());
+			mv.setViewName("member/memberlist");		
+		}else {
+			mv.addObject("errorType", "notAdmin");
+			mv.setViewName("error/errormain");
+		}
 		return mv;
 	}
 	

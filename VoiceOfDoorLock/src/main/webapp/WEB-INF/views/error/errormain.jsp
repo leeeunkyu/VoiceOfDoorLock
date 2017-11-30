@@ -19,8 +19,10 @@
 <%@include file="../split/header.jsp" %>
 <%if(errorType.equals("notMaster")) {%>
 	<%@include file="notmaster.jsp" %>
+<%}else{ %>
+	<%@include file="notadmin.jsp" %>
+	
 <%} %>
-
 <%@include file="../split/footer.jsp" %>
 </body>
 </html>

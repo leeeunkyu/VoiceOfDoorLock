@@ -33,7 +33,7 @@
 	<%String isTrip[] = {"isTrip0","isTrip1","isTrip2",
 			"isTrip3","isTrip4","isTrip5"}; %>
 	<div class="container-fluid">
-		<img src="${pageContext.request.contextPath}/resources/images/engineer/홍길동0.jpg" alt="..." id="engineerImg" class="img-thumbnail test" >
+		<img src="" alt="사원을 선택해 주세요" id="engineerImg" class="img-thumbnail test" >
 	</div>
 	<div style="margin-left:300px; margin-top: 10px;">
 		<div>
@@ -115,7 +115,7 @@
 	<p class="test2">
 	<div>
 		<p class="font-weight-bold">
-		<span id="eName">수리기사 성함: <%=engineer.get(0).getEngineerName() %></span>
+		<span id="eName">수리기사 성함: </span>
 		</p>
 	</div>
 	
@@ -148,7 +148,7 @@
 		     <%} %>
 	     <%}else { %>
 	      <%for(int i=0;i<engineer.size();i++){ %>
-		    <tr onclick="selectEngineer('<%=engineer.get(i).getEngineerPhone() %>','${pageContext.request.contextPath}/resources/images/engineer/')">
+		    <tr onclick="selectEngineer('<%=i %>','${pageContext.request.contextPath}/resources/images/engineer/')">
 		      <th scope="row"><%=i %></th>
 		      <td><span id=<%=engineerPhone[i]%>><%=engineer.get(i).getEngineerPhone() %></span></td>
 		      <td><span id=<%=engineerName[i]%>><%=engineer.get(i).getEngineerName() %></span></td>

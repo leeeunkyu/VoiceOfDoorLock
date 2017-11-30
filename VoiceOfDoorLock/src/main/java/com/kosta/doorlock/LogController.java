@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,12 +25,24 @@ public class LogController {
 		this.logService = logService;
 	}
 	
+	public boolean sessionCheck(HttpSession session) {
+		if(session.getAttribute("adminId") != null) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(value="logListView.do")
-	public ModelAndView logListView() {
+	public ModelAndView logListView(HttpSession session) {
+		
 		ModelAndView mv = new ModelAndView();
-		ArrayList<Log> logArr = logService.logSelectList(null,null);
-		mv.addObject("logListSize", ""+logArr.size());
-		mv.setViewName("log/loglist");
+		if(sessionCheck(session)) {
+			ArrayList<Log> logArr = logService.logSelectList(null,null);
+			mv.addObject("logListSize", ""+logArr.size());
+			mv.setViewName("log/loglist");		}else {
+			mv.addObject("errorType", "notAdmin");
+			mv.setViewName("error/errormain");
+		}
 		return mv;
 	}
 	

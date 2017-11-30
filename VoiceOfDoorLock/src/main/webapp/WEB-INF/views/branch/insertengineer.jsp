@@ -33,11 +33,11 @@
     	<small id="emailHelp" class="form-text text-muted">사원 전화 번호를 적어주세요</small>
 	 </div>
 	<div class="form-group"> 
-	<select class="form-control" name="engineerTrip">
-	  <option value="T">T</option>
-	  <option value="F">F</option> 
+	<select class="form-control" name="isTrip">
+	  <option value="TRUE">TRUE</option>
+	  <option value="FALSE">FALSE</option> 
 	</select>
-	 <small id="emailHelp" class="form-text text-muted">사원 출장 가능 여부를 표시해주세요 T = 출장가능,  F = 출장불가능</small>
+	 <small id="emailHelp" class="form-text text-muted">사원 출장 가능 여부를 표시해주세요 TRUE = 출장가능,  FALSE = 출장불가능</small>
 	</div>
 	<input class="form-control" type="text" name="branchName"  value="<%=branchName %>" readonly>
  <div class="form-group">

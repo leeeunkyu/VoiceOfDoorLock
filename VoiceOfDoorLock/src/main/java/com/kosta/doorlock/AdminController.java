@@ -29,6 +29,14 @@ public class AdminController {
 		this.adminService = adminService;
 	}
 	
+	public boolean sessionCheck(HttpSession session) {
+		if(session.getAttribute("adminId") != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	
 	@RequestMapping(value="signup.do" , method = RequestMethod.GET)
 	public String signUp() {
 		return "admin/signup";
@@ -39,8 +47,17 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="keyCreateView.do")
-	public String keyCreateView() {
-		return "key/keyCreateView";
+	public ModelAndView keyCreateView(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(sessionCheck(session)) {
+			mv.setViewName("key/keyCreateView");
+			return mv;			
+		}else {
+			mv.setViewName("error/errormain");
+			mv.addObject("errorType","notMaster");
+		}
+			return mv;
+		
 	}
 	
 	@RequestMapping(value="logout.do")
@@ -96,8 +113,6 @@ public class AdminController {
 			session.setAttribute("adminId", adminId);
 			session.setAttribute("adminGrade", map.get("adminGrade"));
 			session.setAttribute("branchName", map.get("branchName"));
-			System.out.println(map.get("branchName"));
-			System.out.println(adminId);
 		}else {
 			session.setAttribute("adminId", null);
 			session.setAttribute("adminGrade", null);
