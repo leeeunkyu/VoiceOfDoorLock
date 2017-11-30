@@ -50,6 +50,15 @@ public class MemberController {
 		return mv;
 	}
 	
+	@RequestMapping(value="memberBlock.do")
+	@ResponseBody
+	public boolean memberBlock(String memberId) {
+		if(memberService.updateBlock(memberId)) {
+			return true;
+		}
+		return false;
+	}
+	
 	@RequestMapping(value="memberSelectSize.do")
 	@ResponseBody
 	public int memberSelectSize(String searchContent,String selectContent) {

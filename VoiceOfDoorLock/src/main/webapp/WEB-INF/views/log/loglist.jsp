@@ -27,8 +27,8 @@
 	<%String doorlockNum[] = {"doorlockNum0","doorlockNum1","doorlockNum2",
 			"doorlockNum3","doorlockNum4","doorlockNum5"}; %>						
 <div class="jumbotron" style="background-color:#D8D8D8">
-	  <h1 class="display-3">회원기록 조회</h1>
-	  <p class="lead"> Voice of DoorLock 서비스를 이용하고 있는 회원들의 회원 정보에 대해 조회할수 있습니다. </p>
+	  <h1 class="display-3">로그 조회</h1>
+	  <p class="lead"> DoorLock에대한 전체적인 입기록을 확인 할 수 있습니다. </p>
 	  <hr class="my-4">
 	 <table class="table">
 	  <thead class="thead-dark">

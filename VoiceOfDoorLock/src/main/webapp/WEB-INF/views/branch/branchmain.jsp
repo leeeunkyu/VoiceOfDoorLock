@@ -18,8 +18,8 @@
 	<div class="container">
 		<a href="insertEngineerView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/insertEngineer.png" class="img-fluid" alt="Responsive image"></a>
 		<a href="updateEngineerView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/updateEngineer.png" class="img-fluid" alt="Responsive image"></a>	
-		<a href="insertBranchView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/selectSell.png" class="img-fluid" alt="Responsive image"></a>	
-		<a href="insertDoorKeyView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/updateBranch.png" class="img-fluid" alt="Responsive image"></a>
+		<a href="insertBranchView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/insertbranch.png" class="img-fluid" alt="Responsive image"></a>	
+		<a href="insertDoorKeyView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/createdoorlockkey.png" class="img-fluid" alt="Responsive image"></a>
 	</div>
 <%@include file="../split/footer.jsp" %>
 

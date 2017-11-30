@@ -32,7 +32,7 @@
 			"memberAddress3","memberAddress4","memberAddress5"}; %>						
 <div class="jumbotron" style="background-color:#D8D8D8">
 	  <h1 class="display-3">AS 조회</h1>
-	  <p class="lead"> Voice of DoorLock 서비스를 이용하고 있는 회원들의 회원 정보에 대해 조회할수 있습니다. </p>
+	  <p class="lead"> Voice of DoorLock 서비스를 이용하고 있는 회원들의 as 신청 기록을 조회할수 있습니다. </p>
 	  <hr class="my-4">
 	 <table class="table">
 	  <thead class="thead-dark">

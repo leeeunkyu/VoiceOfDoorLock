@@ -26,6 +26,10 @@ public class MemberService {
 		return memberDao.memberSelect(memberId);
 	}
 
+	public boolean updateBlock(String memberId) {
+		return memberDao.updateBlock(memberId);
+	}
+
 	
 	
 	

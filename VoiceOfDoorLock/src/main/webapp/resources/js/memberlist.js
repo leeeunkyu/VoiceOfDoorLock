@@ -16,6 +16,8 @@ $(document).ready(function(){
         	document.getElementById('memberName'+i).innerHTML=test[i].memberName;
         	document.getElementById('notification'+i).innerHTML=test[i].notification;
         	document.getElementById('lineId'+i).innerHTML=test[i].lineId;
+        	document.getElementById('block'+i).innerHTML=test[i].block;
+        	console.log(test[i].block);
         	}
         },
         error:function(e){  
@@ -48,12 +50,16 @@ function goPage(page) {
         	        	document.getElementById('memberName'+k).innerHTML=test[k].memberName;
         	        	document.getElementById('notification'+k).innerHTML=test[k].notification;
         	        	document.getElementById('lineId'+k).innerHTML=test[k].lineId;
+        	        	document.getElementById('block'+k).innerHTML=test[k].block;
+
         			}
         			for(var l=k;l<5;l++){
         				document.getElementById('memberId'+l).innerHTML="";
         	        	document.getElementById('memberName'+l).innerHTML="";
         	        	document.getElementById('notification'+l).innerHTML="";
         	        	document.getElementById('lineId'+l).innerHTML="";
+        	        	document.getElementById('block'+l).innerHTML="";
+
         			}
         			break;
         		}else{
@@ -61,6 +67,8 @@ function goPage(page) {
     	        	document.getElementById('memberName'+j).innerHTML=test[j].memberName;
     	        	document.getElementById('notification'+j).innerHTML=test[j].notification;
     	        	document.getElementById('lineId'+j).innerHTML=test[j].lineId;
+    	        	document.getElementById('block'+j).innerHTML=test[j].block;
+
         		}
         	}
         	
@@ -129,6 +137,33 @@ function searchSelect(search,select) {
         	searchSize = test;
         	console.log('searchSize',searchSize);
         	goPage(1);
+        },
+        error:function(e){  
+            console.log(e.responseText);  
+        }  
+    });
+}
+function memberBlock(memberId) {
+	
+	$.ajax({
+        // type을 설정합니다.
+        type : 'GET',
+        url : "memberBlock.do",
+        // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+        data : {"memberId":memberId},
+        dataType: "json",
+		contentType:"application/json;charset=UTF-8",
+        // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+        success : function (test) {
+        	console.log(test);
+        	if(test) {
+        		document.getElementById('blockmember').innerHTML = memberId+'가 정상적으로 차단 되었습니다.';  
+            	goPage(1);
+        	}else{
+        		document.getElementById('blockmember').innerHTML = memberId+'가 차단 안됨';        		
+
+        	}
+
         },
         error:function(e){  
             console.log(e.responseText);  

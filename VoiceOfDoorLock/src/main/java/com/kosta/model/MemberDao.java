@@ -94,4 +94,32 @@ public class MemberDao {
 		}
 		return member;
 	}
+
+	public boolean updateBlock(String memberId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "UPDATE MEMBER SET BLOCK = ? WHERE MEMBER_ID = ?";
+		
+		try {
+			con = factoryDao.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "LOST");
+			pstmt.setString(2, memberId);
+			if(pstmt.executeUpdate() != 0) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				factoryDao.close(con, pstmt, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 }
