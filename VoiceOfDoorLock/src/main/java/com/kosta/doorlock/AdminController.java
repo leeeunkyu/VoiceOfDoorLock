@@ -42,8 +42,11 @@ public class AdminController {
 		return "admin/signup";
 	}
 	@RequestMapping(value="login.do")
-	public String login() {
-		return "admin/login";
+	public ModelAndView login() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("islogin", "wait");
+		mv.setViewName("admin/login");
+		return mv;
 	}
 	
 	@RequestMapping(value="keyCreateView.do")
@@ -67,6 +70,7 @@ public class AdminController {
 			session.setMaxInactiveInterval(0);
 			session.invalidate();
 		}
+
 		return "home";
 	}
 	
@@ -109,15 +113,18 @@ public class AdminController {
 	public ModelAndView login(HttpSession session,String adminId,String adminPw) {
 		ModelAndView mv = new ModelAndView();
 		Map<String,String>  map = adminService.selectAdmin(adminId,adminPw);
-		if(map.get("adminGrade") != null) {
+
+		if(map != null && map.get("adminGrade") != null) {
 			session.setAttribute("adminId", adminId);
 			session.setAttribute("adminGrade", map.get("adminGrade"));
 			session.setAttribute("branchName", map.get("branchName"));
+			mv.setViewName("home");
 		}else {
+			mv.addObject("islogin", "false");
+			mv.setViewName("admin/login");
 			session.setAttribute("adminId", null);
 			session.setAttribute("adminGrade", null);
 		}
-		mv.setViewName("home");
 
 		return mv;
 	}

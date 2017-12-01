@@ -14,7 +14,7 @@
 <body>
 <%@include file="split/header.jsp" %>
 <div class="mainPosition">
-	<span class="card" style="width: 20rem; float: left; margin: 10px;margin-left:15% ;">
+	<span class="card" style="width: 20rem; float: left; margin: 12px;margin-left:15%; margin-top: 4%;">
 	  <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/main/usersearch.png" alt="Card image cap">
 	  <span class="card-body">
 		    <h4 class="card-title">회원 조회</h4>
@@ -27,7 +27,7 @@
 		    <a href="memberListView.do?index=1" class="btn btn-primary">조회하기</a>
 		</span>
 	</span>
-	<span class="card" style="width: 20rem; float: left; margin: 10px">
+	<span class="card" style="width: 20rem; float: left; margin: 12px; margin-top: 4%;">
   <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/main/entersearch.png" alt="Card image cap">
   <span class="card-body">
     <h4 class="card-title">입기록 조회</h4>
@@ -40,7 +40,7 @@
     <a href="logListView.do?index=1" class="btn btn-primary">조회하기</a>
   </span>
 	</span>
-	<span class="card" style="width: 20rem; float: left; margin: 10px">
+	<span class="card" style="width: 20rem; float: left; margin: 12px; margin-top: 4%;">
   <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/main/branch.jpg" alt="Card image cap">
   <span class="card-body">
     <h4 class="card-title">지점 설정</h4>
@@ -52,7 +52,7 @@
     <a href="branchMainView.do" class="btn btn-primary">조회하기</a>
   </span>
 	</span>
-	<span class="card" style="width: 20rem; float: left; margin: 10px">
+	<span class="card" style="width: 20rem; float: left; margin: 12px; margin-top: 4%;">
   <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/main/AS.jpg" alt="Card image cap">
   <span class="card-body">
     <h4 class="card-title">AS 조회</h4>

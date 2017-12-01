@@ -18,7 +18,6 @@
 
 <body>
 <%String branchName = (String)session.getAttribute("branchName"); %>
-<%=branchName %>
 <%@include file="../split/header.jsp" %>
 
 <form action="insertEngineer.do" method="post" enctype="multipart/form-data">

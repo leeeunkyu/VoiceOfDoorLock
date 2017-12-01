@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kosta.dto.AsApplication;
+import com.kosta.dto.Engineer;
 import com.kosta.service.DoorLockService;
 import com.kosta.service.EngineerService;
 import com.kosta.util.CreateDoorLockNum;
@@ -124,8 +125,12 @@ public class BranchController {
 		
 	}
 	@RequestMapping(value="updateEngineerView.do" )
-	public String updateEngineerView() {
-		return "branch/updateengineer";
+	public ModelAndView updateEngineerView(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<Engineer> engineersList = engineerService.engineerSelectList(null, null,(String)session.getAttribute("branchName"));
+		mv.addObject("engineerList", engineersList);
+		mv.setViewName("branch/updateengineer");
+		return mv;
 	}
 	
 	@RequestMapping(value="insertEngineer.do", method=RequestMethod.POST )
