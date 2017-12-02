@@ -41,8 +41,8 @@
 		      <th scope="col">알림</th>
 		      <th scope="col">라인아이디</th>
 		      <th scope="col">block 여부</th>
-		      <th scope="col">block </th>
 		      <th scope="col">safe </th>
+		      <th scope="col">block </th>
 		      
 		    </tr>
 		  </thead>

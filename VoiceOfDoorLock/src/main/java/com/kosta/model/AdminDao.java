@@ -35,7 +35,7 @@ public class AdminDao {
 			rs=pstmt.executeQuery();
 			while(rs.next()){
 
-				if(rs.getString("BRANCH_CODE").trim().equals(branchCode.trim())) {
+				if(rs.getString("BRANCH_NUM").trim().equals(branchCode.trim())) {
 					return true;
 				}
 			}

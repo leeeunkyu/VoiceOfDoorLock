@@ -138,17 +138,19 @@ public class BranchController {
         MultipartFile uploadFile, Object obj,String engineerPhone,String engineerName,String isTrip,String branchName) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("branch/branchmain");
+	    String engineerNum =  engineerService.insertEngineer(engineerPhone,engineerName,branchName,isTrip);
+
 		String path = "";
         String fileName = "";
-        
+        String fileOriginName = uploadFile.getOriginalFilename();
+        String exc = fileOriginName.substring(fileOriginName.lastIndexOf("."), fileOriginName.length());
         OutputStream out = null;
         PrintWriter printWriter = null;
         
         try {
-            fileName = engineerPhone+".png";
+            fileName = engineerNum+".png";
             byte[] bytes = uploadFile.getBytes();
             path = getSaveLocation(request, obj);
-            
             System.out.println("UtilFile fileUpload fileName : " + fileName);
             System.out.println("UtilFile fileUpload uploadPath : " + path);
             
@@ -184,7 +186,6 @@ public class BranchController {
                 e.printStackTrace();
             }
         }
-        engineerService.insertEngineer(engineerPhone,engineerName,branchName,isTrip);
         return mv;
   	}
 private String getSaveLocation(MultipartHttpServletRequest request, Object obj) {

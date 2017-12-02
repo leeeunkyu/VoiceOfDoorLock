@@ -1,3 +1,4 @@
+
 var input = document.querySelector('#uploadFile');
 var preview = document.querySelector('.preview');
 

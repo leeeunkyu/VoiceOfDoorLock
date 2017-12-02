@@ -22,6 +22,11 @@
 
 <form action="insertEngineer.do" method="post" enctype="multipart/form-data">
 	<div class="form-group">
+		<label for="exampleInputEmail1">사원 번호</label>
+   		<input type="text" class="form-control" id="engineerNum" name="engineerNum" placeholder="사원번호는 사원 등록시에 발급 됩니다." readonly>
+   		<small id="emailHelp" class="form-text text-muted">사원 번호 입니다.</small>
+	</div> 
+	<div class="form-group">
 		<label for="exampleInputEmail1">사원 이름</label>
    		<input type="text" class="form-control" id="engineerName" name="engineerName" placeholder="Name">
    		<small id="emailHelp" class="form-text text-muted">사원 이름을 적어주세요</small>

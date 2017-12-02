@@ -59,6 +59,14 @@ public class EngineerController {
 		return false;
 	}
 	
+	@RequestMapping(value="selectOneEngineer")
+	@ResponseBody
+	public Engineer selectOneEngineer(HttpSession session, String engineerPhone) {
+		Engineer engineer = engineerService.selectOneEngineer(engineerPhone);
+		
+		return engineer;
+	}	
+	
 	@RequestMapping(value="engineerListView.do")
 	public ModelAndView engineerListView(HttpSession session,String branchName,String memberId) {
 		
@@ -138,13 +146,22 @@ public class EngineerController {
 		map.add("longitude", branch.getBranchLongitude());
 		map.add("LineId", member.getLineId());
 		// post
-		String result = restTemplate.postForObject("https://gentle-refuge-88758.herokuapp.com/test", map, String.class);
+		String result = restTemplate.postForObject("https://gentle-refuge-88758.herokuapp.com/tripEngineer", map, String.class);
 		System.out.println(result);
 		
 		String str ="test231";
 		map.add("memberName", member.getMemberName());
 		System.out.println(result);
 		return map;
+	}
+	
+	@RequestMapping(value="updateEngineer.do")
+	@ResponseBody
+	public String updateEngineer(String engineerNum,String engineerName,String engineerPhone,String isTrip) {
+		if(engineerService.updateEngineer(engineerNum,engineerName,engineerPhone,isTrip)) {
+			return "true";			
+		}
+			return "false";
 	}
 	
 }

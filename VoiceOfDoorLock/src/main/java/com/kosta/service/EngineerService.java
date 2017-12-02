@@ -1,6 +1,7 @@
 package com.kosta.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,19 @@ public class EngineerService {
 	}
 
 
-	public void insertEngineer(String engineerPhone, String engineerName, String branchNaem, String isTrip) {
-		engineerDao.insertEngineer(engineerPhone,engineerName,branchNaem,isTrip);
+	public String insertEngineer(String engineerPhone, String engineerName, String branchNaem, String isTrip) {
+		return engineerDao.insertEngineer(engineerPhone,engineerName,branchNaem,isTrip);
+	}
+
+
+	public Engineer selectOneEngineer(String engineerPhone) {
+		return engineerDao.selectOneEngineer(engineerPhone);
+	}
+
+
+	public boolean updateEngineer(String engineerNum,String engineerName, String engineerPhone, String isTrip) {
+
+		return engineerDao.updateEngineer(engineerNum,engineerName,engineerPhone,isTrip);
 	}
 
 }

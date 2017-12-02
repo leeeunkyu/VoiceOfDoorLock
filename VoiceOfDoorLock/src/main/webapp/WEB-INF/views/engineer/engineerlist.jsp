@@ -24,14 +24,15 @@
 	<%String size = (String)request.getAttribute("engineerListSize"); %>
 	<%ArrayList<Engineer> engineer = (ArrayList)request.getAttribute("engineerList"); %>
 	<%Member member = (Member)request.getAttribute("member"); %>
+	<%String engineerNum[] = {"engineerNum0","engineerNum1","engineerNum2","engineerNum3","engineerNum4"}; %>
 	<%String engineerPhone[] = {"engineerPhone0","engineerPhone1","engineerPhone2",
-			"engineerPhone3","engineerPhone4","engineerPhone5"}; %>
+			"engineerPhone3","engineerPhone4"}; %>
 	<%String engineerName[] = {"engineerName0","engineerName1","engineerName2",
-			"engineerName3","engineerName4","engineerName5"}; %>
+			"engineerName3","engineerName4"}; %>
 	<%String branchName[] = {"branchName0","branchName1","branchName2",
-			"branchName3","branchName4","branchName5"}; %>
+			"branchName3","branchName4"}; %>
 	<%String isTrip[] = {"isTrip0","isTrip1","isTrip2",
-			"isTrip3","isTrip4","isTrip5"}; %>
+			"isTrip3","isTrip4"}; %>
 	<div class="container-fluid">
 		<img src="" alt="사원을 선택해 주세요" id="engineerImg" class="img-thumbnail test" >
 	</div>
@@ -129,6 +130,7 @@
 	  <thead class="thead-dark">
 	    <tr>
 	      <th scope="col">#</th>
+	      <th scope="col">수리기사 사원번호</th>
 	      <th scope="col">수리기사 전화번호</th>
 	      <th scope="col">수리기사 이름</th>
 	      <th scope="col">지점명</th>
@@ -140,6 +142,7 @@
 		    <%for(int i=0;i<5;i++){ %>
 		    <tr onclick="selectEngineer('<%=i %>','${pageContext.request.contextPath}/resources/images/engineer/')">
 		      <th scope="row"><%=i %></th>
+			  <td><span id=<%=engineerNum[i]%>><%=engineer.get(i).getEngineerNum() %></span></td>
 		      <td><span id=<%=engineerPhone[i]%>><%=engineer.get(i).getEngineerPhone() %></span></td>
 		      <td><span id=<%=engineerName[i]%>><%=engineer.get(i).getEngineerName() %></span></td>
 		      <td><span id=<%=branchName[i]%>><%=engineer.get(i).getBranchName() %></span></td>
@@ -150,6 +153,7 @@
 	      <%for(int i=0;i<engineer.size();i++){ %>
 		    <tr onclick="selectEngineer('<%=i %>','${pageContext.request.contextPath}/resources/images/engineer/')">
 		      <th scope="row"><%=i %></th>
+			  <td><span id=<%=engineerNum[i]%>><%=engineer.get(i).getEngineerNum() %></span></td>		      
 		      <td><span id=<%=engineerPhone[i]%>><%=engineer.get(i).getEngineerPhone() %></span></td>
 		      <td><span id=<%=engineerName[i]%>><%=engineer.get(i).getEngineerName() %></span></td>
 		      <td><span id=<%=branchName[i]%>><%=engineer.get(i).getBranchName() %></span></td>

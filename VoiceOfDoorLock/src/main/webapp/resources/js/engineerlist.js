@@ -28,12 +28,14 @@ function goPage(page,branchName) {
         			console.log('j값'+j);
         			for(var k=0;k<=j-1;k++){
         	        	console.log('k값'+k);
+        				document.getElementById('engineerNum'+k).innerHTML=test[k].engineerNum;
         				document.getElementById('engineerPhone'+k).innerHTML=test[k].engineerPhone;
         	        	document.getElementById('engineerName'+k).innerHTML=test[k].engineerName;
         	        	document.getElementById('branchName'+k).innerHTML=test[k].branchName;
         	        	document.getElementById('isTrip'+k).innerHTML=test[k].isTrip;
         			}
         			for(var l=k;l<5;l++){
+        				document.getElementById('engineerNum'+l).innerHTML="";
         				document.getElementById('engineerPhone'+l).innerHTML="";
         	        	document.getElementById('engineerName'+l).innerHTML="";
         	        	document.getElementById('branchName'+l).innerHTML="";
@@ -41,6 +43,7 @@ function goPage(page,branchName) {
         			}
         			break;
         		}else{
+    				document.getElementById('engineerNum'+j).innerHTML=test[j].engineerNum;
         			document.getElementById('engineerPhone'+j).innerHTML=test[j].engineerPhone;
     	        	document.getElementById('engineerName'+j).innerHTML=test[j].engineerName;
     	        	document.getElementById('branchName'+j).innerHTML=test[j].branchName;
@@ -140,7 +143,7 @@ function tripEngineer(memberId) {
 
 function selectEngineer(index,path) {
 	document.getElementById('eName').innerHTML ="수리기사 성함 : "+document.getElementById('engineerName'+index).innerHTML;
-	document.getElementById('engineerImg').src =path+document.getElementById('engineerPhone'+index).innerHTML+".png";
+	document.getElementById('engineerImg').src =path+document.getElementById('engineerNum'+index).innerHTML+".png";
 	globalEngineerName = document.getElementById('engineerName'+index).innerHTML;
 	globalEngineerPhone = document.getElementById('engineerPhone'+index).innerHTML;
 	globalBranchName = document.getElementById('branchName'+index).innerHTML;
