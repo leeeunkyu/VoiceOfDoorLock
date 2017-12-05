@@ -155,8 +155,17 @@
     <artifactId>mysql-connector-java</artifactId>
     <version>5.1.38</version>
 </dependency>
-	
+	   <dependency>
+         <groupId>com.google.code.geocoder-java</groupId>
+         <artifactId>geocoder-java</artifactId>
+         <version>0.16</version>
+      </dependency>
 
+	<dependency> 
+	<groupId>javax.mail</groupId>
+	 <artifactId>mail</artifactId>
+	  <version>1.4.7</version> 
+	</dependency>
 
 	</dependencies>
     <build>

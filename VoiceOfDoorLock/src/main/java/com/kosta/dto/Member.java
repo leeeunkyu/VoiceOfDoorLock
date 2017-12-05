@@ -6,10 +6,8 @@ public class Member {
 	private String memberPw;
 	private String memberName;
 	private String memberPhone;
-	private String memberAddress;
 	private String memberEmail;
 	private String notification;
-	private String memberPublickey;
 	private String lineId;
 	private String block;
 	
@@ -25,17 +23,15 @@ public class Member {
 		super();
 	}
 	
-	public Member(String memberId, String memberPw, String memberName, String memberPhone, String memberAddress,
-			String memberEmail, String notification, String memberPublickey, String lineId, String block) {
+	public Member(String memberId, String memberPw, String memberName, String memberPhone,
+			String memberEmail, String notification, String lineId, String block) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
 		this.memberName = memberName;
 		this.memberPhone = memberPhone;
-		this.memberAddress = memberAddress;
 		this.memberEmail = memberEmail;
 		this.notification = notification;
-		this.memberPublickey = memberPublickey;
 		this.lineId = lineId;
 		this.block = block;
 	}
@@ -64,12 +60,6 @@ public class Member {
 	public void setMemberPhone(String memberPhone) {
 		this.memberPhone = memberPhone;
 	}
-	public String getMemberAddress() {
-		return memberAddress;
-	}
-	public void setMemberAddress(String memberAddress) {
-		this.memberAddress = memberAddress;
-	}
 	public String getMemberEmail() {
 		return memberEmail;
 	}
@@ -82,12 +72,7 @@ public class Member {
 	public void setNotification(String notification) {
 		this.notification = notification;
 	}
-	public String getMemberPublickey() {
-		return memberPublickey;
-	}
-	public void setMemberPublickey(String memberPublickey) {
-		this.memberPublickey = memberPublickey;
-	}
+
 	public String getLineId() {
 		return lineId;
 	}

@@ -33,5 +33,13 @@ public class AdminService {
 	public boolean isId(String adminId) {
 		return adminDao.isId(adminId);
 	}
+
+	public String selectAdminId(String adminName, String branchName, String branchNum) {
+		return adminDao.selectAdminId(adminName,branchName,branchNum);
+	}
+
+	public boolean selectAdminPw(String adminId, String branchName, String branchNum) {
+		return adminDao.selectAdminPw(adminId,branchName,branchNum);
+	}
 	
 }

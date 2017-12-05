@@ -5,7 +5,7 @@ public class AsApplication {
 	private String memberId;
 	private String memberName;
 	private String memberPhone;
-	private String memberAddress;
+	private String doorlockAddress;
 	private String doorlockNum;
 	private String branchName;
 	private String applicationDay;
@@ -15,18 +15,20 @@ public class AsApplication {
 	}
 
 	public AsApplication(String applicationIndex, String memberId, String memberName, String memberPhone,
-			String memberAddress, String doorlockNum, String branchName, String applicationDay) {
+			String doorlockAddress, String doorlockNum, String branchName, String applicationDay) {
 		super();
 		this.applicationIndex = applicationIndex;
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberPhone = memberPhone;
-		this.memberAddress = memberAddress;
+		this.doorlockAddress = doorlockAddress;
 		this.doorlockNum = doorlockNum;
 		this.branchName = branchName;
 		this.applicationDay = applicationDay;
 	}
 	
+
+
 	public String getApplicationIndex() {
 		return applicationIndex;
 	}
@@ -51,11 +53,11 @@ public class AsApplication {
 	public void setMemberPhone(String memberPhone) {
 		this.memberPhone = memberPhone;
 	}
-	public String getMemberAddress() {
-		return memberAddress;
+	public String getDoorlockAddress() {
+		return doorlockAddress;
 	}
-	public void setMemberAddress(String memberAddress) {
-		this.memberAddress = memberAddress;
+	public void setDoorlockAddress(String doorlockAddress) {
+		this.doorlockAddress = doorlockAddress;
 	}
 	public String getDoorlockNum() {
 		return doorlockNum;

@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kosta.dto.Engineer" %>
 <%@page import="com.kosta.dto.Member" %>
@@ -19,10 +20,20 @@
 <link type="text/css" rel="stylesheet" href="resources/css/engineer.css"></link>
 
 <title>Insert title here</title>
+   <style>
+      #map {
+        height: 200px;
+        width: 500px;
+       }
+    </style>
 </head>
 <body>
+
 	<%String size = (String)request.getAttribute("engineerListSize"); %>
+	<%String doorlockAddress = (String)request.getAttribute("doorlockAddress"); %>
+	
 	<%ArrayList<Engineer> engineer = (ArrayList)request.getAttribute("engineerList"); %>
+	<%Map location = (Map)request.getAttribute("location");  %>
 	<%Member member = (Member)request.getAttribute("member"); %>
 	<%String engineerNum[] = {"engineerNum0","engineerNum1","engineerNum2","engineerNum3","engineerNum4"}; %>
 	<%String engineerPhone[] = {"engineerPhone0","engineerPhone1","engineerPhone2",
@@ -34,33 +45,37 @@
 	<%String isTrip[] = {"isTrip0","isTrip1","isTrip2",
 			"isTrip3","isTrip4"}; %>
 	<div class="container-fluid">
-		<img src="" alt="사원을 선택해 주세요" id="engineerImg" class="img-thumbnail test" >
+		<img src="" alt="사원을 선택해 주세요" id="engineerImg" class="img-thumbnail test" >		
 	</div>
+	
 	<div style="margin-left:300px; margin-top: 10px;">
 		<div>
-			<table>
+			<table id="memberTable">
 				<tr>
-					<td>회원 아이디</td>
-					<td><span class="font-weight-normal" id="memberId"><%=member.getMemberId() %></span></td>
+					<td class="font-weight-bold">회원 아이디</td>
+					<td><span class="font-weight-normal" id="memberId">&nbsp;&nbsp;<%=member.getMemberId() %></span></td>
 				</tr>
 				<tr>
-					<td>회원 이름</td>
-					<td><span class="font-weight-normal" id="memberId"><%=member.getMemberName() %></span></td>					
+					<td class="font-weight-bold">회원 이름</td>
+					<td><span class="font-weight-normal" id="memberId">&nbsp;&nbsp;<%=member.getMemberName() %></span></td>					
 				</tr>
 				<tr>
-					<td>회원 전화번호</td>
-					<td><span class="font-weight-normal" id="memberId"><%=member.getMemberPhone() %></span></td>				
+					<td class="font-weight-bold">회원 전화번호</td>
+					<td><span class="font-weight-normal" id="memberId">&nbsp;&nbsp;<%=member.getMemberPhone() %></span></td>				
 				</tr>
 				<tr>
-					<td>회원 주소</td>
-					<td><span class="font-weight-normal" id="memberId"><%=member.getMemberAddress() %></span></td>
+					<td class="font-weight-bold">라인 아이디</td>
+					<td><span class="font-weight-normal" id="memberId">&nbsp;&nbsp;<%=member.getLineId() %></span></td>
 				</tr>
 				<tr>
-					<td>라인 아이디</td>
-					<td><span class="font-weight-normal" id="memberId"><%=member.getLineId() %></span></td>
+					<td class="font-weight-bold">도어락 위치</td>
+					<td><span class="font-weight-normal" id="doorlockAddress">&nbsp;&nbsp;<%=doorlockAddress %></span></td>
 				</tr>
 			</table>
 		</div>
+		<span class="font-weight-bold">latitude: </span>  <span id="lat"><%=location.get("lat") %></span>
+		<span class="font-weight-bold">Longitude: </span> <span id="lot"><%=location.get("lot") %></span>
+				
 		<div style="margin-top: 20px;">
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal" onclick="initModal()">
@@ -111,15 +126,12 @@
 			    </div>
 			  </div>
 			</div>
+			<p>
+				<div id="map"></div>
+			
 		</div>
 	</div>
-	<p class="test2">
-	<div>
-		<p class="font-weight-bold">
-		<span id="eName">수리기사 성함: </span>
-		</p>
-	</div>
-	
+		<span id="eName" style="position: relative; top: -110px;">수리기사님을 선택해 주세요 </span>
 	<div class="fixed-bottom">
 		<div id="alert" class="alert alert-success" role="alert">
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -210,7 +222,9 @@
 	</div>
 	
 </div>
-
+ <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWsmkNm_0HTEe90pW6wNP4u37-VTQgFG4&callback=initMap">
+    </script>
 <script type="text/javascript" src="resources/js/engineerlist.js"></script>
 
 </body>

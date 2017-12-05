@@ -1,76 +1,68 @@
 $(document).ready(function(){
-	console.log('as시작');
+	//console.log('시작');
 	$.ajax({
         // type을 설정합니다.
         type : 'GET',
-        url : "asApplicationSelectList.do",
+        url : "blockMemberSelectList.do",
         // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
         data : {"index":1},
         dataType: "json",
 		contentType:"application/json;charset=UTF-8",
         // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
         success : function (test) {
+        //	console.log(test);
         	for(var i=0;i<5;i++){
-        	document.getElementById('applicationDay'+i).innerHTML=test[i].applicationDay;
-        	document.getElementById('branchName'+i).innerHTML=test[i].branchName;
         	document.getElementById('memberId'+i).innerHTML=test[i].memberId;
-        	document.getElementById('memberName'+i).innerHTML=test[i].memberName;
-        	document.getElementById('memberPhone'+i).innerHTML=test[i].memberPhone;
-        	document.getElementById('doorlockAddress'+i).innerHTML=test[i].doorlockAddress;
-
+        	document.getElementById('adminId'+i).innerHTML=test[i].adminId;
+        	document.getElementById('blockReason'+i).innerHTML=test[i].blockReason;
+        	document.getElementById('blockDay'+i).innerHTML=test[i].blockDay;
         	}
         },
         error:function(e){  
-            console.asApplication(e.responseText);  
+            console.log(e.responseText);  
         }  
     });
 });
-
 var searchContent = null;
 var selectContent = null;
 var searchBoolean = false;
 var searchSize;
-
 function goPage(page) {
 	$.ajax({
         // type을 설정합니다.
         type : 'GET',
-        url : "asApplicationSelectList.do",
+        url : "blockMemberSelectList.do",
         // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-        data : {"index":page ,"searchContent":searchContent,"selectContent":selectContent},
+        data : {"index":page,"searchContent":searchContent,"selectContent":selectContent},
         dataType: "json",
 		contentType:"application/json;charset=UTF-8",
         // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
         success : function (test) {
+        //	console.log(test);
         	for(var j=0;j<5;j++){
         		if(test[j]==null){
         			console.log('j값'+j);
         			for(var k=0;k<=j-1;k++){
-        				document.getElementById('applicationDay'+k).innerHTML=test[k].applicationDay;
-        	        	document.getElementById('branchName'+k).innerHTML=test[k].branchName;
-        	        	document.getElementById('memberId'+k).innerHTML=test[k].memberId;
-        	        	document.getElementById('memberName'+k).innerHTML=test[k].memberName;        	        	
-        	        	document.getElementById('memberPhone'+k).innerHTML=test[k].memberPhone;
-        	        	document.getElementById('doorlockAddress'+k).innerHTML=test[k].doorlockAddress;
+        	        	console.log('k값'+k);
+        				document.getElementById('memberId'+k).innerHTML=test[k].memberId;
+        	        	document.getElementById('adminId'+k).innerHTML=test[k].adminId;
+        	        	document.getElementById('blockReason'+k).innerHTML=test[k].blockReason;
+        	        	document.getElementById('blockDay'+k).innerHTML=test[k].blockDay;
 
         			}
         			for(var l=k;l<5;l++){
-        				document.getElementById('applicationDay'+l).innerHTML="";
-        	        	document.getElementById('branchName'+l).innerHTML="";
-        	        	document.getElementById('memberId'+l).innerHTML="";
-        	        	document.getElementById('memberName'+l).innerHTML="";
-        	        	document.getElementById('memberPhone'+l).innerHTML="";
-        	        	document.getElementById('doorlockAddress'+l).innerHTML="";
+        				document.getElementById('memberId'+l).innerHTML="";
+        	        	document.getElementById('adminId'+l).innerHTML="";
+        	        	document.getElementById('blockReason'+l).innerHTML="";
+        	        	document.getElementById('blockDay'+l).innerHTML="";
 
         			}
         			break;
         		}else{
-        			document.getElementById('applicationDay'+j).innerHTML=test[j].applicationDay;
-    	        	document.getElementById('branchName'+j).innerHTML=test[j].branchName;
-    	        	document.getElementById('memberId'+j).innerHTML=test[j].memberId;
-    	        	document.getElementById('memberName'+j).innerHTML=test[j].memberName;    	        	
-    	        	document.getElementById('memberPhone'+j).innerHTML=test[j].memberPhone;
-    	        	document.getElementById('doorlockAddress'+j).innerHTML=test[j].doorlockAddress;
+        			document.getElementById('memberId'+j).innerHTML=test[j].memberId;
+    	        	document.getElementById('adminId'+j).innerHTML=test[j].adminId;
+    	        	document.getElementById('blockReason'+j).innerHTML=test[j].blockReason;
+    	        	document.getElementById('blockDay'+j).innerHTML=test[j].blockDay;
 
         		}
         	}
@@ -104,6 +96,7 @@ function nextPage(size) {
 			document.getElementById('thirdpage').innerHTML = temp+3;
 		}
 	}
+	
 }
 
 function beforePage() {
@@ -118,6 +111,7 @@ function beforePage() {
 
 	}
 }
+
 function searchSelect(search,select) {
 	searchContent = search;
 	selectContent = select;
@@ -127,7 +121,7 @@ function searchSelect(search,select) {
 	$.ajax({
         // type을 설정합니다.
         type : 'GET',
-        url : "asApplicationSelectSize.do",
+        url : "blockMemberSelectSize.do",
         // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
         data : {"searchContent":search,"selectContent":select},
         dataType: "json",
@@ -145,21 +139,3 @@ function searchSelect(search,select) {
     });
 }
 
-var openWin;
-
-function engineer(memberId,branchName,doorlockAddress) {
-	console.log(memberId);
-	console.log(branchName);
-	window.name = "parentForm";
-    // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-    openWin = window.open("engineerListView.do?branchName="+branchName+"&memberId="+memberId+"&doorlockAddress="+doorlockAddress,
-            "childForm", "width=900, height=940, resizable = yes, scrollbars = no");
-}
-
-function colorChange(data) {
-	data.style.color = 'red';
-}
-
-function colorReturn(data) {
-	data.style.color = 'black';
-}

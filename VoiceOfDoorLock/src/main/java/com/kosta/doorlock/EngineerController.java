@@ -1,5 +1,6 @@
 package com.kosta.doorlock;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -24,6 +25,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.code.geocoder.model.LatLng;
 import com.kosta.dto.Branch;
 import com.kosta.dto.Engineer;
 import com.kosta.dto.Member;
@@ -68,9 +76,31 @@ public class EngineerController {
 	}	
 	
 	@RequestMapping(value="engineerListView.do")
-	public ModelAndView engineerListView(HttpSession session,String branchName,String memberId) {
-		
+	public ModelAndView engineerListView(HttpSession session,String branchName,String memberId,String doorlockAddress) {
 		ModelAndView mv = new ModelAndView();
+		Map map = new HashMap<String, String>();
+		System.out.println(doorlockAddress);
+		  Geocoder geocoder = new Geocoder();
+	      GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(doorlockAddress).setLanguage("ko")
+	            .getGeocoderRequest();
+	      GeocodeResponse geocoderResponse;
+
+	      try {
+	         geocoderResponse = geocoder.geocode(geocoderRequest);
+	         if (geocoderResponse.getStatus() == GeocoderStatus.OK & !geocoderResponse.getResults().isEmpty()) {
+
+	            GeocoderResult geocoderResult = geocoderResponse.getResults().iterator().next();
+	            LatLng latitudeLongitude = geocoderResult.getGeometry().getLocation();
+
+	            String[] location = new String[2];
+	            location[0] = latitudeLongitude.getLat().toString();
+	            location[1] = latitudeLongitude.getLng().toString();
+	    	    map.put("lat",location[0]);
+	    	    map.put("lot",location[1]);
+	         }
+	      } catch (IOException ex) {
+	         ex.printStackTrace();
+	      }
 		if(sessionCheck(session)) {
 			ArrayList<Engineer> engineerArr = engineerService.engineerSelectList(null,null,branchName);
 			if(engineerArr.size() <=0) {
@@ -80,6 +110,8 @@ public class EngineerController {
 				mv.addObject("engineerListSize", ""+engineerArr.size());
 				mv.addObject("engineerList", engineerArr);
 				mv.addObject("member",member);
+				mv.addObject("location", map);
+				mv.addObject("doorlockAddress", doorlockAddress);
 				mv.setViewName("engineer/engineerlist");
 			}
 		}else {
@@ -149,7 +181,8 @@ public class EngineerController {
 		String result = restTemplate.postForObject("https://gentle-refuge-88758.herokuapp.com/tripEngineer", map, String.class);
 		System.out.println(result);
 		
-		String str ="test231";
+		String result2 = restTemplate.postForObject("https://gentle-refuge-88758.herokuapp.com/tripimage", map, String.class);
+		
 		map.add("memberName", member.getMemberName());
 		System.out.println(result);
 		return map;
@@ -159,6 +192,15 @@ public class EngineerController {
 	@ResponseBody
 	public String updateEngineer(String engineerNum,String engineerName,String engineerPhone,String isTrip) {
 		if(engineerService.updateEngineer(engineerNum,engineerName,engineerPhone,isTrip)) {
+			return "true";			
+		}
+			return "false";
+	}
+	
+	@RequestMapping(value="deleteEngineer.do")
+	@ResponseBody
+	public String deleteEngineer(String engineerNum) {
+		if(engineerService.deleteEngineer(engineerNum)) {
 			return "true";			
 		}
 			return "false";

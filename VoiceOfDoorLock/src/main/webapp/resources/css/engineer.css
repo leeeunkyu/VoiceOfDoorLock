@@ -1,11 +1,15 @@
 .test {
-	width: 30%;
-	height: 30%;
-	float: left;
+	width: 260px;
+	height: 280px;
+	float: left;	
 }
 .test2{
-	height: 155px;
-}
+	width: 260px;
+	height: 385px;
+	float: left;	}
 #eName{
 	margin-left: 60px;
+}
+#memberTable th,td {
+    border-bottom: 1px solid #ddd;
 }

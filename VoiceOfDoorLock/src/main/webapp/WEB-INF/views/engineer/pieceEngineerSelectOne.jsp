@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
 <div style="width: 70%; float: left; margin-top: 25px">
-	<div class="border border-info" style="height: 50em">
+	<div  style="height: 50em">
 		<div class="container-fluid" style="margin:10px;">
-			<img src="${pageContext.request.contextPath}/resources/images/engineer/홍길동0.jpg" alt="사원을 선택해 주세요" id="engineerImg" class="img-thumbnail test" >
+			<img src="" alt="사원을 선택해 주세요" id="engineerImg" class="img-thumbnail test" style="width: 250px; height: 400px;" >
 		</div>
 	  <div class="form-group col-md-6" style="float: left;">
 	  	  <label for="engineerName">사원 번호</label>
@@ -31,13 +31,12 @@
    				 document.getElementById('engineerPhone').value, 
    				 document.getElementById('isTrip').value)">변경사항 저장</button>
    		
-   		 <button type="button" class="btn btn-outline-danger">기사님 삭제하기</button>
+   		 <button type="button" class="btn btn-outline-danger" onclick="deleteEngineer(document.getElementById('engineerNum').value)">기사님 삭제하기</button>
    		 <div class="alert alert-primary" id="updateinfo" role="alert" style="margin: 10px;">
-		성공적으로 사원 정보가 변경 됐습니다.
 		</div>
 		<div class="alert alert-danger" id="updatedanger" role="alert" style="margin: 10px;">
-			정보 변경 과정에서 오류가 생겼습니다.
 		</div>
+		
    		</div>
     </div>
 		

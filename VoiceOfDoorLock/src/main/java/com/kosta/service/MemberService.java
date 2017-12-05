@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kosta.dto.BlockCountByAdmin;
 import com.kosta.dto.Member;
 import com.kosta.model.MemberDao;
 
@@ -26,12 +27,12 @@ public class MemberService {
 		return memberDao.memberSelect(memberId);
 	}
 
-	public boolean updateBlock(String memberId) {
-		return memberDao.updateBlock(memberId);
+	public boolean updateMember(String memberId,boolean state, String adminId) {
+		return memberDao.updateMember(memberId,state,adminId);
 	}
 
-	
-	
-	
-	
+	public ArrayList<BlockCountByAdmin> blockMemberSelectList(String searchContent, String selectContent) {
+		return memberDao.blockMemberSelectList(searchContent,selectContent);
+	}
+
 }

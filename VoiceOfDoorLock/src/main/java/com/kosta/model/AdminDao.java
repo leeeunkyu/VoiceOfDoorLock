@@ -145,4 +145,65 @@ public class AdminDao {
 		}
 		return false;
 	}
+
+	public String selectAdminId(String adminName, String branchName, String branchNum) {
+		Connection con =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		if(!isBranch(branchName, branchNum)) {
+			return null;
+		}
+		String sql="SELECT ADMIN_ID FROM ADMIN WHERE ADMIN_NAME=? AND BRANCH_NAME = ?";		
+		try {
+			con=factoryDao.getConnection();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, adminName);
+			pstmt.setString(2, branchName);
+
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				return rs.getString("ADMIN_ID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				factoryDao.close(con, pstmt, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	public boolean selectAdminPw(String adminId, String branchName, String branchNum) {
+		Connection con =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		if(!isBranch(branchName, branchNum)) {
+			return false;
+		}
+		String sql="SELECT ADMIN_PW FROM ADMIN WHERE ADMIN_ID=? AND BRANCH_NAME = ?";		
+		try {
+			con=factoryDao.getConnection();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, adminId);
+			pstmt.setString(2, branchName);
+
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				factoryDao.close(con, pstmt, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 }

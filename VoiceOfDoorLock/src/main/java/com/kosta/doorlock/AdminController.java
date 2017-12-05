@@ -41,6 +41,14 @@ public class AdminController {
 	public String signUp() {
 		return "admin/signup";
 	}
+	@RequestMapping(value="selectAdminIdView.do" , method = RequestMethod.GET)
+	public String selectAdminIdView() {
+		return "admin/selectAdminId";
+	}
+	@RequestMapping(value="selectAdminPwView.do" , method = RequestMethod.GET)
+	public String selectAdminPwView() {
+		return "admin/selectAdminPw";
+	}
 	@RequestMapping(value="login.do")
 	public ModelAndView login() {
 		ModelAndView mv = new ModelAndView();
@@ -89,6 +97,25 @@ public class AdminController {
 	@RequestMapping(value="branchname.do")
 	public String branchnname() {
 		return "admin/branchname";
+	}
+	
+	@RequestMapping(value="selectAdminId.do")
+	@ResponseBody
+	public String selectAdminId(String adminName,String branchName,String branchNum) {
+		String adminId = adminService.selectAdminId(adminName,branchName,branchNum);
+		if(adminId == null) {
+			adminId = "noId";
+		}
+		return adminId;
+	}
+	@RequestMapping(value="selectAdminPw.do")
+	@ResponseBody
+	public boolean selectAdminPw(String adminId,String branchName,String branchNum) {
+		boolean result = false;
+		if(adminService.selectAdminPw(adminId,branchName,branchNum)) {
+			result = true;
+		}
+		return result;
 	}
 	
 	@RequestMapping(value="confirmBranch.do" ,method = RequestMethod.POST)

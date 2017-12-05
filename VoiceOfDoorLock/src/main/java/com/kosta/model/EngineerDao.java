@@ -202,5 +202,34 @@ public class EngineerDao {
 	
 	}
 
+	public boolean deleteEngineer(String engineerNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "DELETE FROM ENGINEER WHERE ENGINEER_NUM = ?";
+		
+		try {
+			con = factoryDao.getConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, engineerNum);
+;
+
+			if(pstmt.executeUpdate() != 0) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				factoryDao.close(con, pstmt, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 
 }

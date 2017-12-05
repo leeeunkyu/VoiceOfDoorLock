@@ -2,16 +2,21 @@ package com.kosta.dto;
 
 public class Branch {
 	private String branchName;
-	private String branchCode;
+	private String branchNum;
 	private String branchLatitude;
 	private String branchLongitude;
+	private String branchPhone;
+	private String branchEmail;
 	
-	public Branch(String branchName, String branchCode, String branchLatitude, String branchLongitude) {
+	public Branch(String branchName, String branchNum, String branchLatitude, String branchLongitude,
+			String branchPhone, String branchEmail) {
 		super();
 		this.branchName = branchName;
-		this.branchCode = branchCode;
+		this.branchNum = branchNum;
 		this.branchLatitude = branchLatitude;
 		this.branchLongitude = branchLongitude;
+		this.branchPhone = branchPhone;
+		this.branchEmail = branchEmail;
 	}
 
 	public Branch() {
@@ -26,12 +31,12 @@ public class Branch {
 		this.branchName = branchName;
 	}
 
-	public String getBranchCode() {
-		return branchCode;
+	public String getBranchNum() {
+		return branchNum;
 	}
 
-	public void setBranchCode(String branchCode) {
-		this.branchCode = branchCode;
+	public void setBranchNum(String branchNum) {
+		this.branchNum = branchNum;
 	}
 
 	public String getBranchLatitude() {
@@ -49,7 +54,26 @@ public class Branch {
 	public void setBranchLongitude(String branchLongitude) {
 		this.branchLongitude = branchLongitude;
 	}
-	
-	
 
+	public String getBranchPhone() {
+		return branchPhone;
+	}
+
+	public void setBranchPhone(String branchPhone) {
+		this.branchPhone = branchPhone;
+	}
+
+	public String getBranchEmail() {
+		return branchEmail;
+	}
+
+	public void setBranchEmail(String branchEmail) {
+		this.branchEmail = branchEmail;
+	}
+	
+	
+	
+	
+	
+	
 }

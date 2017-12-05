@@ -20,6 +20,8 @@
 	<%String size = (String)request.getAttribute("asApplicationListSize"); %>
 	<%String applicationDay[] = {"applicationDay0","applicationDay1","applicationDay2",
 			"applicationDay3","applicationDay4","applicationDay5"}; %>
+	<%String doorlockAddress[] = {"doorlockAddress0","doorlockAddress1","doorlockAddress2",
+			"doorlockAddress3","doorlockAddress4","doorlockAddress5"}; %>
 	<%String branchName[] = {"branchName0","branchName1","branchName2",
 			"branchName3","branchName4","branchName5"}; %>		
 	<%String memberId[] = {"memberId0","memberId1","memberId2",
@@ -28,8 +30,7 @@
 			"memberName3","memberName4","memberName5"}; %>
 	<%String memberPhone[] = {"memberPhone0","memberPhone1","memberPhone2",
 			"memberPhone3","memberPhone4","memberPhone5"}; %>		
-	<%String memberAddress[] = {"memberAddress0","memberAddress1","memberAddress2",
-			"memberAddress3","memberAddress4","memberAddress5"}; %>						
+					
 <div class="jumbotron" style="background-color:#D8D8D8">
 	  <h1 class="display-3">AS 조회</h1>
 	  <p class="lead"> Voice of DoorLock 서비스를 이용하고 있는 회원들의 as 신청 기록을 조회할수 있습니다. </p>
@@ -43,32 +44,36 @@
 	      <th scope="col">회원 아이디</th>
 	      <th scope="col">회원 이름</th>
 	      <th scope="col">회원 전화번호</th>
-	      <th scope="col">회원 주소</th>
+	      <th scope="col">도어락 주소</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	  	<%if (Integer.parseInt(size) >= 5) {%>
 		    <%for(int i=0;i<5;i++){ %>
-			    <tr id="selectEngineer<%=i %>"  onmouseout="colorReturn(this)" onmousemove="colorChange(this)" onclick="engineer(document.getElementById('<%=memberId[i]%>').innerHTML,document.getElementById('<%=branchName[i]%>').innerHTML)">
+			    <tr id="selectEngineer<%=i %>"  onmouseout="colorReturn(this)" onmousemove="colorChange(this)" 
+			    onclick="engineer(document.getElementById('<%=memberId[i]%>').innerHTML,document.getElementById('<%=branchName[i]%>').innerHTML,document.getElementById('<%=doorlockAddress[i]%>').innerHTML)">
 			      <th scope="row"><%=i %></th>
 			      	<td><span id=<%=applicationDay[i]%>></span></td>
 			       	<td><span id=<%=branchName[i]%>></span></td>
 			      	<td><span id=<%=memberId[i]%>></span></td>
 			      	<td><span id=<%=memberName[i]%>></span></td>
 			      	<td><span id=<%=memberPhone[i]%>></span></td>
-			     	<td><span id=<%=memberAddress[i]%>></span></td>
+			      	<td><span id=<%=doorlockAddress[i]%>></span></td>
+			      	
 			    </tr>
 	       <%} %>
 	  	 <%}else { %>
 		     <%for(int i=0;i< Integer.parseInt(size) ;i++){ %>
-			      <tr id="selectEngineer<%=i %>" onmouseout="colorReturn(this)" onmousemove="colorChange(this)" onclick="engineer(document.getElementById('<%=memberId[i]%>').innerHTML,document.getElementById('<%=branchName[i]%>').innerHTML)">
+			      <tr id="selectEngineer<%=i %>" onmouseout="colorReturn(this)" onmousemove="colorChange(this)" 
+			      onclick="engineer(document.getElementById('<%=memberId[i]%>').innerHTML,document.getElementById('<%=branchName[i]%>').innerHTML,document.getElementById('<%=doorlockAddress[i]%>').innerHTML)">
 				      <th scope="row"><%=i %></th>
 				      	<td><span id=<%=applicationDay[i]%>></span></td>
 				       	<td><span id=<%=branchName[i]%>></span></td>
 				      	<td><span id=<%=memberId[i]%>></span></td>
 			     	 	<td><span id=<%=memberName[i]%>></span></td>      	
 				      	<td><span id=<%=memberPhone[i]%>></span></td>
-				     	<td><span id=<%=memberAddress[i]%>></span></td>
+			      		<td><span id=<%=doorlockAddress[i]%>></span></td>
+				      	
 				    </tr>
 			 <%} %>
 	     <%} %>     

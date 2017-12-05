@@ -18,7 +18,7 @@
 	<div class="container" style="margin-top: 2%;">
 	
 	<div class="card mb-3" style="margin: 5px;">
-		<a href="insertEngineerView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/insertEngineer.png" alt="Responsive image"></a>
+		<a href="insertEngineerView.do"><img src="${pageContext.request.contextPath}/resources/images/logo/insertEngineer.png" class="img-fluid" alt="Responsive image"></a>
   <div class="card-body">
     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
   </div>

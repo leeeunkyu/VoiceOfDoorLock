@@ -2,7 +2,7 @@ $(document).ready(function(){
 	console.log('시작');
 	$('#alert').hide();
    // document.getElementById("memberId").innerHTML = opener.document.getElementById("memberId0").value;
-    
+	 // document.getElementById("cInput").value = opener.document.getElementById("pInput").value;
 });
 
 var searchContent = null;
@@ -159,3 +159,16 @@ function initModal() {
 		document.getElementById('sendLine').disabled = false;
 	}
 }
+
+
+function initMap() {
+    uluru = {lat:  Number(document.getElementById('lat').innerHTML), lng:  Number(document.getElementById('lot').innerHTML)};
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 18,
+      center: uluru
+    });
+    marker = new google.maps.Marker({
+      position: uluru,
+      map: map
+    });
+  }

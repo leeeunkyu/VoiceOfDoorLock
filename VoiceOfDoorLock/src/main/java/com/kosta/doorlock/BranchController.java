@@ -7,10 +7,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +20,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kosta.dto.AsApplication;
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.code.geocoder.model.LatLng;
+import com.kosta.dto.Branch;
 import com.kosta.dto.Engineer;
+import com.kosta.service.BranchService;
 import com.kosta.service.DoorLockService;
 import com.kosta.service.EngineerService;
+import com.kosta.util.CreateBranchNum;
 import com.kosta.util.CreateDoorLockNum;
 
 @Controller
@@ -33,6 +40,7 @@ public class BranchController {
 	
 	private EngineerService engineerService;
 	private DoorLockService doorLockService;
+	private BranchService branchService;
 	
 	@Autowired
 	public void setDoorLockService(DoorLockService doorLockService) {
@@ -44,11 +52,24 @@ public class BranchController {
 		this.engineerService = engineerService;
 	}
 	
+	@Autowired
+	public void setBranchService(BranchService branchService) {
+		this.branchService = branchService;
+	}
+	
 	public boolean sessionCheck(HttpSession session) {
 		if(session.getAttribute("adminId") != null) {
 			return true;
 		}
 		return false;
+	}
+
+	@RequestMapping(value="insertBranch.do")
+	public String insertBranch(String branchName,String branchPhone,String branchEmail,String branchLatitude,String branchLongitude) {
+		String branchNum = CreateBranchNum.createBranchNum(branchName,branchLatitude, branchLongitude);
+		Branch branch = new Branch(branchName, branchNum, branchLatitude, branchLongitude, branchPhone, branchEmail);
+		branchService.insertBranch(branch);
+		return "branch/branchmain";
 	}
 
 	@RequestMapping(value="branchMainView.do")
@@ -133,6 +154,39 @@ public class BranchController {
 		return mv;
 	}
 	
+	@RequestMapping(value="branchmap.do" )
+	public String branchmap() {
+	
+		return "branch/branchmap";
+	}
+	
+	@RequestMapping(value="getBranchLocation.do" )
+	@ResponseBody
+	public Map getBranchLocation(String branchName) {
+		Map map = new HashMap<String, String>();
+		  Geocoder geocoder = new Geocoder();
+	      GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(branchName).setLanguage("ko")
+	            .getGeocoderRequest();
+	      GeocodeResponse geocoderResponse;
+
+	      try {
+	         geocoderResponse = geocoder.geocode(geocoderRequest);
+	         if (geocoderResponse.getStatus() == GeocoderStatus.OK & !geocoderResponse.getResults().isEmpty()) {
+
+	            GeocoderResult geocoderResult = geocoderResponse.getResults().iterator().next();
+	            LatLng latitudeLongitude = geocoderResult.getGeometry().getLocation();
+
+	            String[] location = new String[2];
+	            location[0] = latitudeLongitude.getLat().toString();
+	            location[1] = latitudeLongitude.getLng().toString();
+	    	    map.put("lat",location[0]);
+	    	    map.put("lot",location[1]);
+	         }
+	      } catch (IOException ex) {
+	         ex.printStackTrace();
+	      }
+		return map;
+	}
 	@RequestMapping(value="insertEngineer.do", method=RequestMethod.POST )
 	public ModelAndView insertEngineer(MultipartHttpServletRequest request,
         MultipartFile uploadFile, Object obj,String engineerPhone,String engineerName,String isTrip,String branchName) {
@@ -191,6 +245,7 @@ public class BranchController {
 private String getSaveLocation(MultipartHttpServletRequest request, Object obj) {
         
         String uploadPath = request.getSession().getServletContext().getRealPath("/");
+        System.out.println(uploadPath);
         String attachPath = "resources/images/engineer/";
         
         System.out.println("UtilFile getSaveLocation path : " + uploadPath + attachPath);

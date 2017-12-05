@@ -43,6 +43,9 @@
 	      <li class="nav-item">
 	        <a class="nav-link" href="keyCreateView.do">키 생성하기</a>
 	      </li>
+	       <li class="nav-item">
+	        <a class="nav-link" href="blockMemberView.do">블락 유저 확인</a>
+	      </li>
 	    </ul>
 	<%} %>
     <span class="navbar-text">

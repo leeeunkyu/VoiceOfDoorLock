@@ -47,7 +47,7 @@ public class AsApplicationDao {
 				list.add(new AsApplication(
 						rs.getString("APPLICATION_INDEX"), rs.getString("MEMBER_ID"),
 						rs.getString("MEMBER_NAME"), rs.getString("MEMBER_PHONE"), 
-						rs.getString("MEMBER_ADDRESS"), rs.getString("DOORLOCK_NUM"), 
+						rs.getString("DOORLOCK_ADDRESS"), rs.getString("DOORLOCK_NUM"), 
 						rs.getString("BRANCH_NAME"), rs.getString("APPLICATION_DAY")));
 			}
 			

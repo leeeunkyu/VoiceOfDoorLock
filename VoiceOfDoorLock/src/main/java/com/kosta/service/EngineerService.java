@@ -40,4 +40,10 @@ public class EngineerService {
 		return engineerDao.updateEngineer(engineerNum,engineerName,engineerPhone,isTrip);
 	}
 
+
+	public boolean deleteEngineer(String engineerNum) {
+		// TODO Auto-generated method stub
+		return engineerDao.deleteEngineer(engineerNum);
+	}
+
 }
