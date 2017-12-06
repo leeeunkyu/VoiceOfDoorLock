@@ -9,9 +9,9 @@
   비 정상적인 접근을 하지 마세요!
   <span class="oi oi-warning"></span>
   </h4>
-  <p>해당 웹 페이지는 voice of doorlock관련 관리자 들만 접속할수 있는 사이트 입니다. voice of doorlock 관리자이신 분들은 로그인을 해주세요.</p>
+  <p>해당 웹 페이지는 voice of doorlock관련 관리자 들만 접속할수 있는 사이트 입니다. voice of doorlock 관리자이신 분들은 로그인을 해주세요. </p>
   <p>This web page is only accessible to voice of doorlock administrators. Please sign in if you are a voice of doorlock manager.</p>
-  
+  <a href="login.do">로그인 하기</a>
   <hr>
   <p class="mb-0">경고를 무시한채 지속적인 접속을 할 경우 법적 처벌을 받을수 있음을 알려드립니다.</p>
   <p class="mb-0">로그인이 되지 않는 경우, 지점코드를 분실하신 경우, 기타 회원가입에 문제가 있으신 분들</p>

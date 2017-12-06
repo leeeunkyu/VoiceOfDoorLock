@@ -8,7 +8,7 @@ function openChild() {
 	// window.name = "부모창 이름"; 
     window.name = "parentForm";
     // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-    openWin = window.open("branchname.do",
+    openWin = window.open("branchName.do",
             "childForm", "width=570, height=350, resizable = no, scrollbars = no");    
 }
 function setParentText(){

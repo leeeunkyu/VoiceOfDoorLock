@@ -5,8 +5,8 @@
 <link type="text/css" rel="stylesheet" href="resources/css/engineer.css"></link>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-<div style="width: 70%; float: left; margin-top: 25px">
-	<div  style="height: 50em">
+<div style="width: 65%; float: left;">
+	<div  style="height: 50em; margin-top: 3em; margin-left: 2em;" >
 		<div class="container-fluid" style="margin:10px;">
 			<img src="" alt="사원을 선택해 주세요" id="engineerImg" class="img-thumbnail test" style="width: 250px; height: 400px;" >
 		</div>
@@ -38,7 +38,8 @@
 		</div>
 		
    		</div>
-    </div>
-		
 
+    </div>
+    
+		</div>
 </div>

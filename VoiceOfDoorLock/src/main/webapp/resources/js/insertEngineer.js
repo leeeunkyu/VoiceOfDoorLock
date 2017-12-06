@@ -48,7 +48,8 @@ function validFileType(file) {
   }
 
   return false;
-}function returnFileSize(number) {
+}
+function returnFileSize(number) {
   if(number < 1024) {
     return number + 'bytes';
   } else if(number > 1024 && number < 1048576) {
@@ -56,4 +57,8 @@ function validFileType(file) {
   } else if(number > 1048576) {
     return (number/1048576).toFixed(1) + 'MB';
   }
+}
+
+function insertEngineer() {
+	document.getElementById('engineerForm').submit();
 }

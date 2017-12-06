@@ -37,17 +37,19 @@ public class EngineerDao {
 			con = factoryDao.getConnection();
 			if (selectContent == null) {
 				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, branchName);
 			}else if (selectContent.equals("engineerName")) {
 				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ENGINEER_NAME LIKE ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, branchName);
-				pstmt.setString(2, "%"+searchContent+"%");
-			}else {
+
+			}else if(selectContent.equals("isTrip")){
 				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ISTRIP LIKE ?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, branchName);
+		
+			}else {
+				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ENGINEER_NUM LIKE ?";
+
+			}
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, branchName);
+			if(selectContent != null) {
 				pstmt.setString(2, "%"+searchContent+"%");
 			}
 			rs = pstmt.executeQuery();
@@ -102,16 +104,16 @@ public class EngineerDao {
 
 	}
 
-	public Engineer selectOneEngineer(String engineerPhone) {
+	public Engineer selectOneEngineer(String engineerNum) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
 		try {
 			con = factoryDao.getConnection();
-			sql = "SELECT * FROM ENGINEER WHERE ENGINEER_PHONE = ?";
+			sql = "SELECT * FROM ENGINEER WHERE ENGINEER_NUM = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, engineerPhone);
+			pstmt.setString(1, engineerNum);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				return new Engineer(rs.getString("ENGINEER_NUM"), rs.getString("ENGINEER_PHONE"),
@@ -229,6 +231,10 @@ public class EngineerDao {
 			}
 		}
 		return false;
+	}
+
+	public ArrayList<Engineer> searchEngineer(String branchName, String searchSelect, String searchContent) {
+		return null;
 	}
 
 

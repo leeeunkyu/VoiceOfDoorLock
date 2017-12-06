@@ -7,9 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="resources/plugin/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="resources/js/keyCreate.js"></script>
 
 </head>
 <body>
@@ -22,11 +25,29 @@
   <hr class="my-4">
   <p>아래 버튼을 누르는 순간... 기타 간략한 key에 대한 설명</p>
   <p class="lead">
-    <a class="btn btn-danger btn-lg" href="#" role="button">키 생성하기</a>
-    <a class="btn btn btn-info btn-lg" href="#" role="button">생성됐던 키 리스트 보기</a>
-    
+    <a class="btn btn-danger btn-lg" href="setRsaKey.do" role="button" data-toggle="modal" data-target="#exampleModal" onclick="getkey()">키 생성하기</a>    
   </p>
 </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">성공적으로 키가 생성됐습니다.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="publicKey">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
 </div>
 <%@include file="../split/footer.jsp" %>
 

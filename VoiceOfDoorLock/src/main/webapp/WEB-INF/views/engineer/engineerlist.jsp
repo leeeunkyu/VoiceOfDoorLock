@@ -9,10 +9,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script
-  src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
+<script src="resources/plugin/jquery-3.2.1.slim.min.js"></script>
+
  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -205,8 +203,9 @@
 	<div class="d-flex justify-content-center">
 	 		<select class="custom-select d-block my-3" id="selectContent"  required>
 		    <option value="">검색조건</option>
+		    <option value="engineerNum">사원번호</option>
 		    <option value="engineerName">기사 성함</option>
-		    <option value="engineerTrip">출장 가능여부</option>
+		    <option value="isTrip">출장 가능여부</option>		    
 	  	</select>
 	  	</div> 
 	<div class="d-flex justify-content-center">	

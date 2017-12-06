@@ -30,8 +30,8 @@ public class EngineerService {
 	}
 
 
-	public Engineer selectOneEngineer(String engineerPhone) {
-		return engineerDao.selectOneEngineer(engineerPhone);
+	public Engineer selectOneEngineer(String engineerNum) {
+		return engineerDao.selectOneEngineer(engineerNum);
 	}
 
 
@@ -44,6 +44,11 @@ public class EngineerService {
 	public boolean deleteEngineer(String engineerNum) {
 		// TODO Auto-generated method stub
 		return engineerDao.deleteEngineer(engineerNum);
+	}
+
+
+	public ArrayList<Engineer> searchEngineer(String branchName, String searchSelect, String searchContent) {
+		return engineerDao.searchEngineer(branchName,searchSelect,searchContent);
 	}
 
 }

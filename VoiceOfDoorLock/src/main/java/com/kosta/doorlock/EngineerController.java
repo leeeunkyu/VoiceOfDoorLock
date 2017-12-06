@@ -67,13 +67,22 @@ public class EngineerController {
 		return false;
 	}
 	
-	@RequestMapping(value="selectOneEngineer")
+	@RequestMapping(value="selectOneEngineer.do")
 	@ResponseBody
-	public Engineer selectOneEngineer(HttpSession session, String engineerPhone) {
-		Engineer engineer = engineerService.selectOneEngineer(engineerPhone);
+	public Engineer selectOneEngineer(HttpSession session, String engineerNum) {
+		Engineer engineer = engineerService.selectOneEngineer(engineerNum);
 		
 		return engineer;
 	}	
+	
+	@RequestMapping(value="searchEngineer.do")
+	@ResponseBody
+	public ArrayList<Engineer> searchEngineer(HttpSession session, String searchSelect, String searchContent) {
+		String branchName = (String)session.getAttribute("branchName");
+		ArrayList<Engineer> arrEngineer = engineerService.searchEngineer(branchName,searchSelect,searchContent);
+		
+		return arrEngineer;
+	}
 	
 	@RequestMapping(value="engineerListView.do")
 	public ModelAndView engineerListView(HttpSession session,String branchName,String memberId,String doorlockAddress) {
@@ -137,6 +146,9 @@ public class EngineerController {
 	public ArrayList<Engineer> engineerSelectList(HttpServletResponse res,HttpServletRequest req,int index,String branchName,String searchContent,String selectContent) {
 		ArrayList<Engineer> engineerArr = engineerService.engineerSelectList(searchContent,selectContent,branchName);
 		ArrayList<Engineer> engineerList = new ArrayList<Engineer>();
+		if(index == 99) {
+			return engineerArr;
+		}
 		if(engineerArr.size() >= index*5) {
 			for(int i=(index-1)*5;i<index*5;i++ ) {
 				engineerList.add(engineerArr.get(i));

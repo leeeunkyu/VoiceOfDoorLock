@@ -24,7 +24,6 @@
   <p>새로운 도어락 제품이 만들어졌을 경우 아래 버튼을 눌러 해당 도어락에 대한 고유 식별 번호와 도어락 비밀 번호를 만들어 줄 수 있습니다.</p>
   <p class="lead">
     <a class="btn btn-danger btn-lg" href="#" role="button" data-toggle="modal" data-target="#exampleModal" onclick="createDoorLock()">도어락 생성하기</a>
-    <a class="btn btn btn-info btn-lg" href="#" role="button">생성됐던 도어락 리스트 보기</a>
   </p>
 </div>
 </div>

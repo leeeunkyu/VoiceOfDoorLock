@@ -7,20 +7,21 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="resources/plugin/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="resources/js/selectAdminPw.js"></script>
+<script type="text/javascript" src="resources/js/selectAdminId.js"></script>
 
 </head>
 <body>
 <div class="container">
   <img class="card-img-top" src="${pageContext.request.contextPath}/resources/images/logo/mainlogo.png" alt="Card image cap" style="width: 30%;height: 30%;margin-left: 35%;">
-<h5 style="text-align: center;">비밀번호 찾기</h5>
+<h5 style="text-align: center;">아이디 찾기</h5>
+<hr>
  <div class="form-group" style="margin-top: 1em;">
-    <label for="adminId">아이디</label>
-    <input type="text" class="form-control" id="adminId" placeholder="아이디를 입력하세요..">
+    <label for="adminName">이름</label>
+    <input type="text" class="form-control" id="adminName" placeholder="이름을 입력하세요..">
   </div>
    <div class="form-group">
     <label for="branchName">지점 명 </label>
@@ -31,20 +32,12 @@
     <input type="text" class="form-control" id="branchNum" placeholder="지점코드를 입력하세요..">
   </div>
  <button type="button" class="btn btn-outline-primary" 
- onclick="selectAdminPw(document.getElementById('adminId').value,document.getElementById('branchName').value,document.getElementById('branchNum').value)"
- >입력값확인</button>
-  <button type="button" class="btn btn-outline-primary" id="selectPwToEmail"
- onclick="sendEmail(document.getElementById('adminId').value)"
-  disabled>비밀번호 변경 메일 보내기</button>
- <p style="margin: 20px;">
- <u style="margin: 20px;" id="msg"> 메일로 비밀번호 변경 암호가 전송되었습니다.</u>
-   <div class="input-group" id="pwInput">
-      <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">변경암호 입력하기</button>
-      </span>
-    </div>
+ onclick="selectAdminId(document.getElementById('adminName').value,document.getElementById('branchName').value,document.getElementById('branchNum').value)"
+ >아이디 찾기</button>
+ <input type="text" class="form-control" id="adminId" placeholder="아이디 찾기 버튼을 눌러주세요.." readonly style="margin-top: 2em;">
+  
  </div>
 
+  
 </body>
 </html>

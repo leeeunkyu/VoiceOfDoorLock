@@ -41,5 +41,13 @@ public class AdminService {
 	public boolean selectAdminPw(String adminId, String branchName, String branchNum) {
 		return adminDao.selectAdminPw(adminId,branchName,branchNum);
 	}
+
+	public boolean updateAdminPw(String adminId, String adminPw) {
+		return adminDao.updateAdminPw(adminId,adminPw);
+	}
+
+	public String selectAdminEmail(String adminId) {
+		return adminDao.selectAdminEmail(adminId);
+	}
 	
 }

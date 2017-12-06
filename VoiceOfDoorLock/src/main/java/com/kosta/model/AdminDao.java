@@ -206,4 +206,58 @@ public class AdminDao {
 		}
 		return false;
 	}
+
+	public boolean updateAdminPw(String adminId, String adminPw) {
+		Connection con =null;
+		PreparedStatement pstmt =null;
+		String sql="UPDATE ADMIN SET ADMIN_PW = ? WHERE ADMIN_ID = ?";
+		
+		try {
+			con=factoryDao.getConnection();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, adminPw);
+			pstmt.setString(2, adminId);
+		
+			if(pstmt.executeUpdate() != 0) {
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				factoryDao.close(con, pstmt, null);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+	public String selectAdminEmail(String adminId) {
+		Connection con =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+	
+		String sql="SELECT ADMIN_EMAIL FROM ADMIN WHERE ADMIN_ID=? ";		
+		try {
+			con=factoryDao.getConnection();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, adminId);
+
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				return rs.getString("ADMIN_EMAIL");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				factoryDao.close(con, pstmt, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 }

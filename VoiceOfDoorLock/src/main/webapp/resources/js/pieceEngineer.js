@@ -4,13 +4,14 @@ $(document).ready(function(){
 	$('#updatedanger').hide();
 });
 
-function selectOneEngineer(engineerPhone,path) {
+function selectOneEngineer(engineerNum,path) {
+	console.log(engineerNum,path);
 	$.ajax({
         // type을 설정합니다.
         type : 'GET',
         url : "selectOneEngineer.do",
         // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-        data : {"engineerPhone":engineerPhone},
+        data : {"engineerNum":engineerNum},
         dataType: "json",
 		contentType:"application/json;charset=UTF-8",
         // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
@@ -86,6 +87,59 @@ function deleteEngineer(engineerNum) {
         		$('#updatedanger').show();
 
         	}
+        },
+        error:function(e){  
+            console.log(e.responseText);  
+        }  
+    });
+}
+var en;
+function selectEngineer(branchName,inputEngineer,inputState,path) {
+		$("#engineerSelectList").empty()
+
+	/*for(var i = 0; i < size; i++) {
+    	document.getElementById('engineerSelectList').options[i] = null;
+    	console.log(i);
+	}*/
+//	console.log(document.getElementById('engineerSelectList').options);
+//	console.log(document.getElementById('engineerSelectList').option);
+	$.ajax({
+        // type을 설정합니다.
+        type : 'GET',
+        url : "engineerSelectList.do",
+        // 사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
+        data : {"index":99,"branchName":branchName,"searchContent":inputEngineer,"selectContent":inputState},
+        dataType: "json",
+		contentType:"application/json;charset=UTF-8",
+        // 성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
+        success : function (selectResult) {
+        	console.log(selectResult.length);
+        	console.log(selectResult);
+        	en = selectResult;
+        	var searchMenu;
+        	if(inputState == 'engineerNum'){
+        		searchMenu = "사원번호&nbsp;검색결과";
+        	}else if(inputState == 'engineerName'){
+        		searchMenu = "사원이름&nbsp;검색결과";
+        	}else{
+        		searchMenu = "출장여부&nbsp;검색결과";
+        	}
+        	$("#engineerSelectList").append("<optgroup label="+searchMenu+">");
+        	for(var i = 0; i < selectResult.length; i++ ) {
+        		$("#engineerSelectList").append(
+        				"<option id="+i+">"+selectResult[i].engineerNum+" &nbsp;|&nbsp;&nbsp; "+selectResult[i].engineerPhone+" &nbsp;|&nbsp;&nbsp; "+selectResult[i].isTrip+" &nbsp;|&nbsp;&nbsp; "+selectResult[i].engineerName+"</option>"
+        		);
+        	}
+        	$("#engineerSelectList").append("</optgroup>");
+        	for(var j = 0; j < selectResult.length; j++){
+        		document.getElementById(j).addEventListener("click", function(e){
+        			console.log(en);
+        			console.log(en[0]);
+        			console.log(e.srcElement.attributes[0].nodeValue);
+        			selectOneEngineer(en[e.srcElement.attributes[0].nodeValue].engineerNum,path);
+        		});	
+        	}
+        	
         },
         error:function(e){  
             console.log(e.responseText);  

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="resources/plugin/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -21,7 +21,7 @@
 			<div class="form-group">
     			<label for="adminId">아이디를 입력하세요.</label>
  			  	 <input type="text" class="form-control" id="adminId" placeholder="id를 입력해 주세요." name="adminId"
- 			  	 autocomplete="off" autofocus required pattern="[0-9a-z]+" maxlength="20" minlength="5">
+ 			  	 autocomplete="off" autofocus required pattern="[0-9]+[a-z]+" maxlength="20" minlength="5">
     			<small id="idHelp" class="form-text text-muted">5~20자리 영문 소문자,숫자를 입력해 주세요</small>
     		</div>	
     		<button type="button" class="btn btn-outline-info" onclick="isId(document.getElementById('adminId').value)">중복확인</button>

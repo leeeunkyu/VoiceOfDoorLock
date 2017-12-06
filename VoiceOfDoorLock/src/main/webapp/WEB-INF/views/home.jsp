@@ -6,7 +6,7 @@
 	<title>Home</title>
 	<link type="text/css" rel="stylesheet" href="resources/css/main.css"></link>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="resources/plugin/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 	
@@ -24,7 +24,7 @@
 			You can inquire about membership information of members using Voice of DoorLock service.
 			</p>		    
 		    </p>
-		    <a href="memberListView.do?index=1" class="btn btn-primary">조회하기</a>
+		    <a href="memberListView.do?index=1" class="btn btn-outline-secondary" style="width: 100%"><span class="font-weight-bold">조회하기</span></a>
 		</span>
 	</span>
 	<span class="card" style="width: 20rem; float: left; margin: 12px; margin-top: 4%;">
@@ -37,7 +37,7 @@
 		You can view the entry history of each DoorLock device of users who use Voice of DoorLock.
 		</p>
     </p>
-    <a href="logListView.do?index=1" class="btn btn-primary">조회하기</a>
+    <a href="logListView.do?index=1" class="btn btn-outline-secondary" style="width: 100%"><span class="font-weight-bold">조회하기</span></a>
   </span>
 	</span>
 	<span class="card" style="width: 20rem; float: left; margin: 12px; margin-top: 4%;">
@@ -49,7 +49,7 @@
 		You can change various settings for the Voice of DoorLock branch that the administrator belongs to.
 		</p>
     </p>
-    <a href="branchMainView.do" class="btn btn-primary">조회하기</a>
+    <a href="branchMainView.do" class="btn btn-outline-secondary" style="width: 100%"><span class="font-weight-bold">조회하기</span></a>
   </span>
 	</span>
 	<span class="card" style="width: 20rem; float: left; margin: 12px; margin-top: 4%;">
@@ -62,7 +62,7 @@
 	You can see the application status of AS users who use Voice of Door Lock, and send a response message to AS.
 		</p>
     </p>
-    <a href="asApplicationListView.do?index=1" class="btn btn-primary">Go somewhere</a>
+    <a href="asApplicationListView.do?index=1" class="btn btn-outline-secondary" style="width: 100%"><span class="font-weight-bold">조회하기</span></a>
   </span>
 	</span>
 </div>
