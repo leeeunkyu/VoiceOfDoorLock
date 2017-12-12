@@ -1,16 +1,1 @@
-function createDoorLock() {
-	$.ajax({
-        type : 'GET',
-        url : "insertDoorKey.do",
-		contentType:"application/json;charset=UTF-8",
-        success : function (doorlock) {
-        	document.getElementById('doorLockNum').innerHTML="doorlock id: "+doorlock.doorLockNum;
-        	document.getElementById('doorLockPassword').innerHTML="doorlock pw: "+doorlock.doorLockPassword;
-        	document.getElementById('doorLockOk').innerHTML="doorlock pw: "+doorlock.doorLockOk;
-
-        },
-        error:function(e){  
-            console.log(e.responseText);  
-        }  
-    });
-}
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('1 d(){$.g({h:\'i\',j:"l.m",n:"p/a;b=c-8",s:1(0){2.3(\'5\').4="0 k: "+0.5;2.3(\'6\').4="0 7: "+0.6;2.3(\'9\').4="0 7: "+0.9},o:1(e){q.r(e.f)}})}',29,29,'doorlock|function|document|getElementById|innerHTML|doorLockNum|doorLockPassword|pw||doorLockOk|json|charset|UTF|createDoorLock||responseText|ajax|type|GET|url|id|insertDoorKey|do|contentType|error|application|console|log|success'.split('|'),0,{}))

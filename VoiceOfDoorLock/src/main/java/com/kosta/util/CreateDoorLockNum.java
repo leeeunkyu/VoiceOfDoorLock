@@ -17,6 +17,9 @@ public class CreateDoorLockNum {
 		}
 		String doorLockNum = "";
 		for (int i = 0; i < arr.length; i++) {
+			if(arr[i] == '5') {
+				arr[i]='a';
+			}
 			doorLockNum += arr[i];
 		}
 		return doorLockNum;

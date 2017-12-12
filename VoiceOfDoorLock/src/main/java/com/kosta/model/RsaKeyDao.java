@@ -31,7 +31,7 @@ public class RsaKeyDao {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				return new RsaKey(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+				return new RsaKey(rs.getString(3),rs.getString(4),rs.getString(1),rs.getString(2));
 			}
 			
 		} catch (SQLException e) {
@@ -57,10 +57,10 @@ public class RsaKeyDao {
 		try {
 			conn = factoryDao.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, rsaKey.getPrivateKeyModulus());
-			pstmt.setString(2, rsaKey.getPrivateKeyPrivateExponent());
-			pstmt.setString(3, rsaKey.getPublicKeyModulus());
-			pstmt.setString(4, rsaKey.getPublicKeyPublicExponent());
+			pstmt.setString(1, rsaKey.getPublicKeyModulus());
+			pstmt.setString(2, rsaKey.getPublicKeyPublicExponent());
+			pstmt.setString(3, rsaKey.getPrivateKeyModulus());
+			pstmt.setString(4, rsaKey.getPrivateKeyPrivateExponent());
 			
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -80,16 +80,17 @@ public class RsaKeyDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		String sql = "UPDATE RSA SET PRIVATE_KEY_MODULUS = ?, PRIVATE_KEY_PRIVATEEXPONENT = ?, PUBLIC_KEY_MODULUS = ?, PUBLIC_KEY_PUBLICEXPONENT = ? WHERE PRIVATE_KEY_MODULUS = ?";
-		
+		System.out.println("rsa암호 변경");
+		String sql = "UPDATE RSA SET PUBLIC_KEY_MODULUS = ?, PUBLIC_KEY_PUBLICEXPONENT = ?, PRIVATE_KEY_MODULUS = ?, PRIVATE_KEY_PRIVATEEXPONENT = ? WHERE PRIVATE_KEY_MODULUS = ?";
+
 		try {
 			conn = factoryDao.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, rsaKey.getPrivateKeyModulus());
-			pstmt.setString(2, rsaKey.getPrivateKeyPrivateExponent());
-			pstmt.setString(3, rsaKey.getPublicKeyModulus());
-			pstmt.setString(4, rsaKey.getPublicKeyPublicExponent());
+			pstmt.setString(1, rsaKey.getPublicKeyModulus());
+			pstmt.setString(2, rsaKey.getPublicKeyPublicExponent());
+			pstmt.setString(3, rsaKey.getPrivateKeyModulus());
+			pstmt.setString(4, rsaKey.getPrivateKeyPrivateExponent());
+		
 			pstmt.setString(5, getPrivateKeyModulus);
 			
 			return pstmt.executeUpdate();

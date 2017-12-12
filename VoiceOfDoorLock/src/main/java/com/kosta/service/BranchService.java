@@ -26,4 +26,8 @@ public class BranchService {
 		branchDao.insertBranch(branch);
 	}
 
+	public Branch selectBranchOne(String branchName) {
+		return branchDao.branchSelect(branchName);
+	}
+
 }

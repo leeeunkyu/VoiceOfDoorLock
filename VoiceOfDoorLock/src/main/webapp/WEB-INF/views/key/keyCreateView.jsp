@@ -25,7 +25,7 @@
   <hr class="my-4">
   <p>아래 버튼을 누르는 순간... 기타 간략한 key에 대한 설명</p>
   <p class="lead">
-    <a class="btn btn-danger btn-lg" href="setRsaKey.do" role="button" data-toggle="modal" data-target="#exampleModal" onclick="getkey()">키 생성하기</a>    
+    <a class="btn btn-danger btn-lg" href="setRsaKey.do" role="button" data-toggle="modal" data-target="#exampleModal" onclick="setKey()">키 생성하기</a>    
   </p>
 </div>
 </div>
@@ -41,7 +41,7 @@
         </button>
       </div>
       <div class="modal-body" id="publicKey">
-        ...
+  		생성중입니다...
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">확인</button>

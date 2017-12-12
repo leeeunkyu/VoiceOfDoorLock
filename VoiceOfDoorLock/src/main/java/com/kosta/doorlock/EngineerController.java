@@ -183,17 +183,21 @@ public class EngineerController {
 
 		// parameter 세팅
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		MultiValueMap<String, String> map2 = new LinkedMultiValueMap<String, String>();
+
 		map.add("location", branch.getBranchName());
 		map.add("engineerName", engineerName);
 		map.add("engineerPhone", engineerPhone);
 		map.add("latitude", branch.getBranchLatitude());
 		map.add("longitude", branch.getBranchLongitude());
 		map.add("LineId", member.getLineId());
+
+		map2.add("LineId", member.getLineId());
 		// post
 		String result = restTemplate.postForObject("https://gentle-refuge-88758.herokuapp.com/tripEngineer", map, String.class);
 		System.out.println(result);
 		
-		String result2 = restTemplate.postForObject("https://gentle-refuge-88758.herokuapp.com/tripimage", map, String.class);
+		String result2 = restTemplate.postForObject("https://gentle-refuge-88758.herokuapp.com/tripimage", map2, String.class);
 		
 		map.add("memberName", member.getMemberName());
 		System.out.println(result);

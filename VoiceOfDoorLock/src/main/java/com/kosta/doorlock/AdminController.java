@@ -1,31 +1,52 @@
 package com.kosta.doorlock;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.RSAPublicKeySpec;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import javax.crypto.Cipher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kosta.dto.Admin;
+import com.kosta.dto.Branch;
 import com.kosta.service.AdminService;
-import com.kosta.util.CreateBranchNum;
+import com.kosta.service.BranchService;
+import com.kosta.util.AesUtil;
 import com.kosta.util.CreateDoorLockNum;
 import com.kosta.util.MailSender;
 
 @Controller
 public class AdminController {
 	
+	private static final int KEY_SIZE = 128;
+    private static final int ITERATION_COUNT = 10000; 
+    private static String RSA_WEB_KEY = "_RSA_WEB_Key_"; // 개인키 session key
+    private static String RSA_INSTANCE = "RSA"; // rsa transformation
+    
 	AdminService adminService;
+	BranchService branchService;
+	
+	@Autowired
+	public void setBranchService(BranchService branchService) {
+		this.branchService = branchService;
+	}
 	
 	@Autowired
 	public void setAdminService(AdminService adminService) {
@@ -81,7 +102,8 @@ public class AdminController {
 	
 	
 	@RequestMapping(value="login.do")
-	public ModelAndView login() {
+	public ModelAndView login(HttpServletRequest req) {
+		initRsa(req);	//publickey privatekey 생성 session에 저장
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("islogin", "wait");
 		mv.setViewName("admin/login");
@@ -100,23 +122,12 @@ public class AdminController {
 		return mv;
 	}
 	@RequestMapping(value="selectAdmin.do" ,method = RequestMethod.GET)
-	public ModelAndView login(HttpSession session,String adminId,String adminPw) {
+	public ModelAndView login(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		Map<String,String>  map = adminService.selectAdmin(adminId,adminPw);
+        session.removeAttribute(AdminController.RSA_WEB_KEY);
 
-		if(map != null && map.get("adminGrade") != null) {
-			session.setAttribute("adminId", adminId);
-			session.setAttribute("adminGrade", map.get("adminGrade"));
-			session.setAttribute("branchName", map.get("branchName"));
-			mv.addObject("loginSucc", "ok");
-			mv.setViewName("home");
-		}else {
-			mv.addObject("islogin", "false");
-			mv.setViewName("admin/login");
-			session.setAttribute("adminId", null);
-			session.setAttribute("adminGrade", null);
-		}
-
+		mv.addObject("loginSucc", "ok");
+		mv.setViewName("home");
 		return mv;
 	}
 	
@@ -165,7 +176,7 @@ public class AdminController {
 			String token = CreateDoorLockNum.doorLockNumGenerate();
 			session.setAttribute("token", token);
 			MailSender mailSender = new MailSender();
-			if(mailSender.send("xdkyu01@gmail.com",token)) {
+			if(mailSender.send(adminEmail,token)) {
 				return true;			
 			}else {
 				return false;
@@ -209,7 +220,173 @@ public class AdminController {
 			mv.addObject("errorType","notMaster");
 		}
 			return mv;
-		
 	}
 	
+	@RequestMapping(value="updateView.do")
+	public ModelAndView updateView(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(sessionCheck(session)) {
+			Admin admin = adminService.selectAdminOne((String)session.getAttribute("adminId"));
+			Branch branch = branchService.selectBranchOne((String)session.getAttribute("branchName"));
+			mv.addObject("admin", admin);
+			mv.addObject("branch", branch);
+			mv.setViewName("branch/updateinfo");
+			return mv;			
+		}else {
+			mv.setViewName("error/errormain");
+			mv.addObject("errorType","notMaster");
+		}
+			return mv;
+	}
+	
+	public void initRsa(HttpServletRequest request) {
+		System.out.println("RSA키생성");
+        HttpSession session = request.getSession();
+ 
+        KeyPairGenerator generator;
+        try {
+            generator = KeyPairGenerator.getInstance(AdminController.RSA_INSTANCE);
+            generator.initialize(1024);
+ 
+            KeyPair keyPair = generator.genKeyPair();
+            KeyFactory keyFactory = KeyFactory.getInstance(AdminController.RSA_INSTANCE);
+            PublicKey publicKey = keyPair.getPublic();
+            PrivateKey privateKey = keyPair.getPrivate();
+ 
+            session.setAttribute(AdminController.RSA_WEB_KEY, privateKey); // session에 RSA 개인키를 세션에 저장
+ 
+            RSAPublicKeySpec publicSpec = (RSAPublicKeySpec) keyFactory.getKeySpec(publicKey, RSAPublicKeySpec.class);
+            String publicKeyModulus = publicSpec.getModulus().toString(16);
+            String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+ 
+            request.setAttribute("RSAModulus", publicKeyModulus); // rsa modulus 를 request 에 추가
+            request.setAttribute("RSAExponent", publicKeyExponent); // rsa exponent 를 request 에 추가
+            System.out.println("공개키 모듈"+publicKeyModulus);
+            System.out.println("공개키 지수"+publicKeyExponent);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	@RequestMapping(value="RsaAestest.do" ,method = RequestMethod.GET)
+	@ResponseBody
+	public Map RsaAestest(HttpServletRequest request) throws Exception {
+		String rsaAesId = request.getParameter("rsaAesId");
+		String rsaAesPw = request.getParameter("rsaAesPw");
+		String rsaAesIv = request.getParameter("rsaAesIv");
+		String rsaAesSalt = request.getParameter("rsaAesSalt");
+		String rsaAesPassPhrase = request.getParameter("rsaAesPassPhrase");
+		HttpSession session = request.getSession();
+        PrivateKey privateKey = (PrivateKey) session.getAttribute(AdminController.RSA_WEB_KEY);
+ 
+        // 복호화
+        rsaAesId = decryptRsa(privateKey, rsaAesId);
+        rsaAesPw = decryptRsa(privateKey, rsaAesPw);
+        rsaAesIv = decryptRsa(privateKey, rsaAesIv);
+        rsaAesSalt = decryptRsa(privateKey, rsaAesSalt);
+        rsaAesPassPhrase = decryptRsa(privateKey, rsaAesPassPhrase);
+        System.out.println("PassPhrase 값: "+rsaAesPassPhrase);
+		AesUtil aesUtil = new AesUtil(KEY_SIZE, ITERATION_COUNT);
+		String decryptId = aesUtil.decrypt(rsaAesSalt, rsaAesIv, rsaAesPassPhrase, rsaAesId);
+		String decryptPw = aesUtil.decrypt(rsaAesSalt, rsaAesIv, rsaAesPassPhrase, rsaAesPw);
+		Map<String,String>  map = adminService.selectAdmin(decryptId,decryptPw);
+		Map<String, String> challenge = null;
+		if(map != null && map.get("adminGrade") != null) {
+			session.setAttribute("adminId", decryptId);
+			session.setAttribute("adminGrade", map.get("adminGrade"));
+			session.setAttribute("branchName", map.get("branchName"));
+			
+			challenge = new HashMap<String,String>();
+			String logicSymbol[] = {"+","-","*","/"};
+			Random random = new Random();
+			challenge.put("islogin", "ok");
+			challenge.put("first", ""+random.nextInt(10));
+			challenge.put("second", logicSymbol[random.nextInt(4)]);
+			challenge.put("third", ""+random.nextInt(10));
+			challenge.put("fourth", logicSymbol[random.nextInt(4)]);
+			challenge.put("fifth", ""+random.nextInt(10));
+			challengeLogic(challenge,request);
+		}else {
+			challenge = new HashMap<String,String>();
+			challenge.put("islogin", "fail");
+		}
+		return challenge;
+	}
+	public void challengeLogic(Map<String, String> challenge,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int firstLogic;
+		int secondLogic;
+		if(challenge.get("second").equals("+")) {
+			firstLogic = Integer.parseInt(challenge.get("first")) + Integer.parseInt(challenge.get("third"));
+		}else if(challenge.get("second").equals("*")) {
+			firstLogic =Integer.parseInt(challenge.get("first")) * Integer.parseInt(challenge.get("third"));
+
+		}else if(challenge.get("second").equals("-")) {
+			firstLogic =Integer.parseInt(challenge.get("first")) - Integer.parseInt(challenge.get("third"));
+
+		}else {
+			if(Integer.parseInt(challenge.get("third")) == 0){
+				firstLogic = Integer.parseInt(challenge.get("first")) / 1;
+
+			}else {
+				firstLogic = Integer.parseInt(challenge.get("first")) / Integer.parseInt(challenge.get("third"));
+			}
+		}
+		if(challenge.get("fourth").equals("+")) {
+			secondLogic = firstLogic + Integer.parseInt(challenge.get("fifth"));
+		}else if(challenge.get("fourth").equals("*")) {
+			secondLogic =firstLogic * Integer.parseInt(challenge.get("fifth"));
+
+		}else if(challenge.get("fourth").equals("-")) {
+			secondLogic =firstLogic - Integer.parseInt(challenge.get("fifth"));
+
+		}else {
+			if(Integer.parseInt(challenge.get("fifth")) == 0) {
+				secondLogic = firstLogic / 1;
+
+			}else {
+				secondLogic = firstLogic / Integer.parseInt(challenge.get("fifth"));
+			}
+		}
+		System.out.println(secondLogic);
+		session.setAttribute("challengeResponse",""+secondLogic);
+	}
+	
+	@RequestMapping(value="logicResponse.do" , method = RequestMethod.GET)
+	@ResponseBody
+	public boolean logicResponse(HttpServletRequest request,String cResponse) {
+		HttpSession session = request.getSession();
+		if(cResponse.equals((String)session.getAttribute("challengeResponse"))) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	private String decryptRsa(PrivateKey privateKey, String securedValue) throws Exception {
+        Cipher cipher = Cipher.getInstance(AdminController.RSA_INSTANCE);
+        byte[] encryptedBytes = hexToByteArray(securedValue);
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
+        String decryptedValue = new String(decryptedBytes, "utf-8"); // 문자 인코딩 주의.
+        return decryptedValue;
+    }
+ 
+    /**
+     * 16진 문자열을 byte 배열로 변환한다.
+     * 
+     * @param hex
+     * @return
+     */
+    public static byte[] hexToByteArray(String hex) {
+        if (hex == null || hex.length() % 2 != 0) { return new byte[] {}; }
+ 
+        byte[] bytes = new byte[hex.length() / 2];
+        for (int i = 0; i < hex.length(); i += 2) {
+            byte value = (byte) Integer.parseInt(hex.substring(i, i + 2), 16);
+            bytes[(int) Math.floor(i / 2)] = value;
+        }
+        return bytes;
+    }
+
 }

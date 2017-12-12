@@ -73,7 +73,7 @@ public class RsaKeyController {
 		System.out.println("test");
 		RsaKey result = rsaKeyService.selectRsaKey();
 		System.out.println(result);
-		return result.getPublicKeyModulus()+"/"+result.getPublicKeyPublicExponent();
+		return result.getPublicKeyModulus()+"/"+result.getPublicKeyPublicExponent();	//퍼블릭키호출 
 	}
 
 	//RSA 키생성
@@ -142,4 +142,37 @@ public class RsaKeyController {
 		}
 		return "false";
 	}
+	//key -> 암호화된 aes키 
+	//RSA 복호화
+	   @RequestMapping(value="RsaAes.do", method=RequestMethod.POST, produces="text/html;charset=UTF-8")
+	   @ResponseBody
+	   public String decRsa(String aesKeyToRsa) throws NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	      RsaKey result = rsaKeyService.selectRsaKey();
+
+	      String strModulus = result.getPrivateKeyModulus();
+	      String strPrivateExponent = result.getPrivateKeyPrivateExponent();
+	      BigInteger modulus = new BigInteger(strModulus);
+	      BigInteger PrivateExponent = new BigInteger(strPrivateExponent);
+
+	      String[] keys = aesKeyToRsa.split("\\/");
+	      byte[] c = new byte[keys.length];
+	      for (int i = 0 ; i < keys.length; i++) {
+	         c[i] = Byte.parseByte(keys[i].trim());
+	      }
+
+	      KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+	      RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(modulus, PrivateExponent); // key concat 
+	      RSAPrivateKey privateKey = (RSAPrivateKey) keyFactory.generatePrivate(rsaPrivateKeySpec); // => private key 객체 생성
+
+	      Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+	      cipher.init(Cipher.DECRYPT_MODE, privateKey);
+	      byte[] bPlain2 = cipher.doFinal(c);
+
+	      String sPlain2 = new String(bPlain2);
+	      System.out.println(sPlain2);
+	      //sPlain2	-> aes 키
+	      
+	      return sPlain2;
+	   }
+	   
 }

@@ -56,13 +56,14 @@ public class DoorLockDao {
 	public boolean insertDoorLock(String doorLockNum, String doorLockPassword) {
 		Connection con =null;
 		PreparedStatement pstmt =null;
-		String sql="INSERT INTO DOORLOCK VALUES (?,?)";
+		String sql="INSERT INTO DOORLOCK VALUES (?,?,?)";
 		
 		try {
 			con=factoryDao.getConnection();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, doorLockNum);
 			pstmt.setString(2, doorLockPassword);
+			pstmt.setString(3, "X");
 
 			if(pstmt.executeUpdate() != 0) {
 				return true;

@@ -21,7 +21,7 @@
 			<div class="form-group">
     			<label for="adminId">아이디를 입력하세요.</label>
  			  	 <input type="text" class="form-control" id="adminId" placeholder="id를 입력해 주세요." name="adminId"
- 			  	 autocomplete="off" autofocus required pattern="[0-9]+[a-z]+" maxlength="20" minlength="5">
+ 			  	 autocomplete="off" autofocus required pattern="[a-z0-9]+" maxlength="20" minlength="5">
     			<small id="idHelp" class="form-text text-muted">5~20자리 영문 소문자,숫자를 입력해 주세요</small>
     		</div>	
     		<button type="button" class="btn btn-outline-info" onclick="isId(document.getElementById('adminId').value)">중복확인</button>
@@ -37,18 +37,20 @@
 			<div class="form-group">
     			<label for="adminId">패스워드를 확인하세요.</label>
  			  	 <input type="password" class="form-control" id="adminPwConfirm" placeholder="password를 확인해 주세요." name="adminPwConfirm"
- 			  	 autocomplete="off" required pattern="[A-Z0-9a-z]+" maxlength="16" minlength="6">
+ 			  	 autocomplete="off" required pattern="[A-Z0-9a-z]+" maxlength="16" minlength="6" onblur="matchPw('document.getElementById('adminPw').value','document.getElementById('adminPwConfirm').value')">
     		</div>	
+    		<p id="isPwFalse" class="text-danger">비밀번호가 일치하지 않습니다.</p>
+    		<p id="isPwTrue" class="text-info">비밀번호가 일치합니다.</p>	
 		 	<div class="form-group">
 		    	<label for="adminEail">Email address</label>
 		    	<input type="email" class="form-control" id="adminEmail" placeholder="name@example.com" name="adminEmail"
-		    	autocomplete="off" required">
+		    	autocomplete="off" required minlength="5">
 		  	</div>
  
  			<div class="form-group">
     			<label for="adminId">이름를 입력하세요.</label>
  			  	 <input type="text" class="form-control" id="adminName" placeholder="이름을 입력해 주세요." name="adminName"
- 			  	 autocomplete="off">
+ 			  	 autocomplete="off" required pattern="[가-힣A-Za-z]+" minlength="1">
     		</div>				
 				<div class="custom-controls-stacked d-block my-3">
 			    <label class="custom-control custom-radio">

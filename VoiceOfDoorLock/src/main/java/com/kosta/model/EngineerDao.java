@@ -36,15 +36,15 @@ public class EngineerDao {
 		try {
 			con = factoryDao.getConnection();
 			if (selectContent == null) {
-				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ?";
+				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? ";
 			}else if (selectContent.equals("engineerName")) {
-				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ENGINEER_NAME LIKE ?";
+				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ENGINEER_NAME LIKE ? ";
 
 			}else if(selectContent.equals("isTrip")){
-				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ISTRIP LIKE ?";
+				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ISTRIP LIKE ? ";
 		
 			}else {
-				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ENGINEER_NUM LIKE ?";
+				sql = "SELECT * FROM ENGINEER WHERE BRANCH_NAME = ? AND ENGINEER_NUM LIKE ? ";
 
 			}
 			pstmt = con.prepareStatement(sql);
@@ -111,7 +111,7 @@ public class EngineerDao {
 		String sql = null;
 		try {
 			con = factoryDao.getConnection();
-			sql = "SELECT * FROM ENGINEER WHERE ENGINEER_NUM = ?";
+			sql = "SELECT * FROM ENGINEER WHERE ENGINEER_NUM = ? ORDER BY APPLICATION_INDEX DESC";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, engineerNum);
 			rs = pstmt.executeQuery();

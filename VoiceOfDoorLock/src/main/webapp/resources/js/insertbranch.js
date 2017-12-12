@@ -1,8 +1,1 @@
-var openWin;
-
-function getlocation() {
-	window.name = "parentForm";
-    // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-    openWin = window.open("branchmap.do", "childForm", "width=450, height=680, resizable=no, scrollbars = no");
-	
-}
+eval(function(p,a,c,k,e,r){e=function(c){return c.toString(a)};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('4 1;9 g(){0.5="6";1=0.7("8.3","a","b=c, d=e, f=2, h = 2")}',18,18,'window|openWin|no|do|var|name|parentForm|open|branchmap|function|childForm|width|450|height|680|resizable|getlocation|scrollbars'.split('|'),0,{}))

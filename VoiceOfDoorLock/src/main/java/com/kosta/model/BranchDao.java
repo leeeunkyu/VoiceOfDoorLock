@@ -73,7 +73,6 @@ public class BranchDao {
 			try {
 				factoryDao.close(con, pstmt, null);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

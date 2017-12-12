@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kosta.dto.Admin;
+import com.kosta.util.CryptoAlgorithm;
 
 @Repository
 public class AdminDao {
@@ -55,13 +56,14 @@ public class AdminDao {
 	public boolean addAdmin(Admin admin) {
 		Connection con =null;
 		PreparedStatement pstmt =null;
+		String cryptoPw = CryptoAlgorithm.convertSha(admin.getAdminPw());
 		String sql="INSERT INTO ADMIN VALUES (?,?,?,?,?,?)";
 		
 		try {
 			con=factoryDao.getConnection();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, admin.getAdminId());
-			pstmt.setString(2, admin.getAdminPw());
+			pstmt.setString(2, cryptoPw);
 			pstmt.setString(3, admin.getAdminEmail());
 			pstmt.setString(4, admin.getAdminName());
 			pstmt.setString(5, admin.getAdminGrade());
@@ -87,6 +89,7 @@ public class AdminDao {
 		Connection con =null;
 		PreparedStatement pstmt =null;
 		ResultSet rs = null;
+		String cryptoPw = CryptoAlgorithm.convertSha(adminPw);
 		String sql="SELECT * FROM ADMIN WHERE ADMIN_ID=?";
 		Map<String, String> map = new HashMap<String, String>();
 		try {
@@ -94,13 +97,8 @@ public class AdminDao {
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, adminId);
 			rs=pstmt.executeQuery();
-			System.out.println(adminId);
 			while(rs.next()){
-				System.out.println(rs.getString("ADMIN_PW"));
-				System.out.println(rs.getString("ADMIN_GRADE"));
-
-				if(rs.getString("ADMIN_PW").equals(adminPw)) {
-					System.out.println("test");
+				if(rs.getString("ADMIN_PW").equals(cryptoPw)) {
 					map.put("adminGrade",  rs.getString("ADMIN_GRADE"));
 					map.put("branchName",  rs.getString("BRANCH_NAME"));
 
@@ -210,12 +208,14 @@ public class AdminDao {
 	public boolean updateAdminPw(String adminId, String adminPw) {
 		Connection con =null;
 		PreparedStatement pstmt =null;
+		String cryptoPw = CryptoAlgorithm.convertSha(adminPw);
+
 		String sql="UPDATE ADMIN SET ADMIN_PW = ? WHERE ADMIN_ID = ?";
 		
 		try {
 			con=factoryDao.getConnection();
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, adminPw);
+			pstmt.setString(1, cryptoPw);
 			pstmt.setString(2, adminId);
 		
 			if(pstmt.executeUpdate() != 0) {
@@ -248,6 +248,35 @@ public class AdminDao {
 			rs=pstmt.executeQuery();
 			while(rs.next()){
 				return rs.getString("ADMIN_EMAIL");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				factoryDao.close(con, pstmt, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	public Admin selectAdminOne(String adminId) {
+		Connection con =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+	
+		String sql="SELECT * FROM ADMIN WHERE ADMIN_ID=? ";		
+		try {
+			con=factoryDao.getConnection();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, adminId);
+
+			rs=pstmt.executeQuery();
+			while(rs.next()){
+				return new Admin(adminId, rs.getString("ADMIN_PW"),
+						rs.getString("ADMIN_EMAIL"), rs.getString("ADMIN_NAME"), 
+						rs.getString("ADMIN_GRADE"), rs.getString("BRANCH_NAME"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

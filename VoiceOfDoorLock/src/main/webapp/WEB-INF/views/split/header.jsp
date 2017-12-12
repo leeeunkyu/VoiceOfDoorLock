@@ -35,6 +35,9 @@
 	      <li class="nav-item">
 	        <a class="nav-link" href="logout.do" onclick="logout()">로그아웃</a>
 	      </li>
+	       <li class="nav-item">
+	        <a class="nav-link" href="updateView.do">지점 /관리자 정보 변경</a>
+	      </li>
 	    </ul>
 	<%}else if(("M").equals(grade)){ %>
 	 <ul class="navbar-nav mr-auto">

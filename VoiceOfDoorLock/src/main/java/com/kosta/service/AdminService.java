@@ -49,5 +49,9 @@ public class AdminService {
 	public String selectAdminEmail(String adminId) {
 		return adminDao.selectAdminEmail(adminId);
 	}
+
+	public Admin selectAdminOne(String adminId) {
+		return adminDao.selectAdminOne(adminId);
+	}
 	
 }

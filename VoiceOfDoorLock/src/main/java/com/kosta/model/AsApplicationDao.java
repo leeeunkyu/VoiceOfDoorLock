@@ -31,14 +31,14 @@ public class AsApplicationDao {
 		try {
 			con = factoryDao.getConnection();
 			if (selectContent == null) {
-				sql = "SELECT * FROM ASAPPLICATION";
+				sql = "SELECT * FROM ASAPPLICATION ORDER BY APPLICATION_INDEX DESC";
 				pstmt = con.prepareStatement(sql);
 			}else if (selectContent.equals("memberId")) {
-				sql = "SELECT * FROM ASAPPLICATION WHERE MEMBER_ID LIKE ?";
+				sql = "SELECT * FROM ASAPPLICATION WHERE MEMBER_ID LIKE ? ORDER BY APPLICATION_INDEX DESC";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%"+searchContent+"%");
 			}else {
-				sql = "SELECT * FROM ASAPPLICATION WHERE BRANCH_NAME LIKE ?";
+				sql = "SELECT * FROM ASAPPLICATION WHERE BRANCH_NAME LIKE ? ORDER BY APPLICATION_INDEX DESC";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, "%"+searchContent+"%");
 			}

@@ -26,7 +26,7 @@
       <input type="text" class="form-control" name="branchName" id="branchName" placeholder="지점 이름..">
     </div>
     <div class="form-group col-md-6">
-      <label for="branchPhone">지점 번호</label>
+      <label for="branchPhone">지점 전화번호</label>
       <input type="text" class="form-control" name="branchPhone" id="branchPhone" placeholder="지점 번호..">
     </div>
   </div>
