@@ -312,22 +312,19 @@ public class AdminController {
 		}
 		return challenge;
 	}
-	public void challengeLogic(Map<String, String> challenge,HttpServletRequest request) {
+	public void challengeLogic(Map<String, String> challenge, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		int firstLogic;
 		int secondLogic;
 		if(challenge.get("second").equals("+")) {
 			firstLogic = Integer.parseInt(challenge.get("first")) + Integer.parseInt(challenge.get("third"));
 		}else if(challenge.get("second").equals("*")) {
-			firstLogic =Integer.parseInt(challenge.get("first")) * Integer.parseInt(challenge.get("third"));
-
+			firstLogic = Integer.parseInt(challenge.get("first")) * Integer.parseInt(challenge.get("third"));
 		}else if(challenge.get("second").equals("-")) {
-			firstLogic =Integer.parseInt(challenge.get("first")) - Integer.parseInt(challenge.get("third"));
-
+			firstLogic = Integer.parseInt(challenge.get("first")) - Integer.parseInt(challenge.get("third"));
 		}else {
-			if(Integer.parseInt(challenge.get("third")) == 0){
+			if(Integer.parseInt(challenge.get("third")) == 0) {
 				firstLogic = Integer.parseInt(challenge.get("first")) / 1;
-
 			}else {
 				firstLogic = Integer.parseInt(challenge.get("first")) / Integer.parseInt(challenge.get("third"));
 			}
@@ -335,20 +332,17 @@ public class AdminController {
 		if(challenge.get("fourth").equals("+")) {
 			secondLogic = firstLogic + Integer.parseInt(challenge.get("fifth"));
 		}else if(challenge.get("fourth").equals("*")) {
-			secondLogic =firstLogic * Integer.parseInt(challenge.get("fifth"));
+			secondLogic = firstLogic * Integer.parseInt(challenge.get("fifth"));
 
 		}else if(challenge.get("fourth").equals("-")) {
-			secondLogic =firstLogic - Integer.parseInt(challenge.get("fifth"));
-
+			secondLogic = firstLogic - Integer.parseInt(challenge.get("fifth"));
 		}else {
 			if(Integer.parseInt(challenge.get("fifth")) == 0) {
 				secondLogic = firstLogic / 1;
-
 			}else {
 				secondLogic = firstLogic / Integer.parseInt(challenge.get("fifth"));
 			}
 		}
-		System.out.println(secondLogic);
 		session.setAttribute("challengeResponse",""+secondLogic);
 	}
 	
